@@ -1,0 +1,73 @@
+/*
+ *
+ * Copyright (C) 2009  Yu-Jie Lin
+ */
+
+body {
+  font-family: Georgia;
+  background-color: #f5ede3;
+  color: #000;
+  }
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #3366cc;
+  }
+
+a:hover {
+  text-decoration: underline;
+  color: #e55c00;
+  }
+
+a.uri {
+  color: #888;
+  font-family: monospace;
+  }
+
+img.right {
+  float: right;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #e55c00;
+  }
+
+pre {
+  margin: 10px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  }
+
+#wrap {
+  width: 600px;
+  margin: auto;
+  text-align: center;
+  }
+
+#header {
+  font-family: Times;
+  }
+
+#header>.title {
+  font-size: 18px;
+  color: #e55c00;
+  }
+
+.nav>a {
+  font-family: Arial;
+  font-size: 16px;
+  font-weight: bold;
+  font-variant: small-caps;
+  color: #77aa77;
+  margin: 0 0.5em;
+  }
+
+#content {
+  text-align: left;
+  margin: auto;
+  }
+
+#footer {
+  clear: both;
+  margin-top: 1em;
+  }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>I Thank » Say Thanks</title>
+  <link href="/css/ithank.css" type="text/css" rel="stylesheet"/>
+  <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script src="/js/say.js" type="text/javascript"></script>
+{{ before_head_end }}
+</head>
+<body>
+<div id="wrap">
+{% include "header.html" %}
+{% include "messages.html" %}
+<div id="content">
+<form action="/say" method="post">
+<div>
+Name <input type="text" name="name" value="{{ name }}"/>
+</div>
+<div>
+Language
+<select id="language" name="language">
+<option>Select</option>
+{% for lang in valid_languages %}
+<option value="{{ lang.0 }}"{% ifequal language lang.0 %} selected{% endifequal %}>{{ lang.1 }}</option>
+{% endfor %}
+</select> <input type="button" onclick="detect_language()" value="Detect"/>
+</div>
+<div>
+Subject
+<input id="subject" type="text" name="subject" value="{{ subject }}"/>
+</div>
+<div>
+Story
+<textarea id="story" name="story">{{ story }}</textarea>
+</div>
+<div>
+<input type="submit"/>
+</div>
+</form>
+</div>
+{% include "footer.html" %}
+</div>
+{{ before_body_end }}
+</body>
+</html>
