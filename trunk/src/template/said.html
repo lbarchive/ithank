@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>I Thank » Say Thanks</title>
+  <link href="/css/ithank.css" type="text/css" rel="stylesheet"/>
+  <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+{{ before_head_end }}
+</head>
+<body>
+<div id="wrap">
+{% include "header.html" %}
+<div id="content">
+Thanks! <a href="{{ thank_link }}">View it</a> or <a href="http://twitter.com/home?status={{ tweet_message|urlencode }}">Tweet</a>!
+</div>
+{% include "footer.html" %}
+</div>
+{{ before_body_end }}
+</body>
+</html>
