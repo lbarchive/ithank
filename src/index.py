@@ -19,10 +19,10 @@ from ithank.util import I18NRequestHandler
 class HomePage(I18NRequestHandler):
 
   def get(self):
-
+    import sys
     template_values = {
         'before_head_end': config.before_head_end,
-        'after_footer': config.after_footer,
+        'after_footer': str(sys.path), #config.after_footer,
         'before_body_end': config.before_body_end,
         }
     path = os.path.join(os.path.dirname(__file__), 'template/home.html')
@@ -112,10 +112,42 @@ class ThankPage(I18NRequestHandler):
     self.response.out.write(template.render(path, template_values))
 
 
+class RandomJSON(I18NRequestHandler):
+
+  def get(self, count):
+ 
+    pass
+
+
+class ReportJSON(I18NRequestHandler):
+
+  def get(self, thank_id):
+ 
+    pass
+
+
+class BrowsePage(I18NRequestHandler):
+
+  def get(self, language, page):
+
+    page = 1 if not page else int(page)
+
+
+class Feed(I18NRequestHandler):
+
+  def get(self, language, page):
+ 
+    page = 1 if not page else int(page)
+
+
 application = webapp.WSGIApplication([
     ('/', HomePage),
     ('/say', SayPage),
     ('/t/([a-zA-Z0-9-_.]+)', ThankPage),
+    (r'/random\.json?count=([0-9]+)', RandomJSON),
+    (r'/report\.json?thank_id=([a-zA-Z0-9-_.]+)', ReportJSON),
+    ('/browse/?([a-zA-Z_]*)/?([0-9]*)/?', BrowsePage),
+    ('/feed/?([a-zA-Z_]*)/?([0-9]*)/?', Feed),
     ],
     debug=config.debug)
 
