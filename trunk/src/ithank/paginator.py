@@ -60,11 +60,13 @@ class Paginator(object):
       raise ValueError('LIMIT and/or OFFSET is not allowed being used in Paginator.')
 
     self._query = query
-    self._page = page
     self._page_band_expand = page_band_expand
     self._page_items = page_items
     self._max_pages = max_pages
     self._cache = cache
+
+    # Set the current page
+    self.page = page
 
     # Decide the last_page
     if total_items:
@@ -101,12 +103,20 @@ class Paginator(object):
   @page.setter
   def page(self, page=1):
     
-    self._page = page
+    if self.max_pages != 0 and page > self.max_pages:
+      self._page = self.max_pages
+    else:
+      self._page = page
 
   @property
   def page_band_expand(self):
     
     return self._page_band_expand
+
+  @property
+  def max_pages(self):
+    
+    return self._max_pages
 
   @property
   def cache(self):
@@ -211,8 +221,14 @@ class Paginator(object):
     '''
 
     _last_page = self._last_page
+    # Cap the self._last_page
+    if self.max_pages and _last_page > self.max_pages:
+      self._last_page = self.max_pages 
     if self.get_page_items(self._last_page):
-      if self.get_page_items(self._last_page + 1):
+      # If _last_page != max_pages, that means max_pages == 0 or _last_page has
+      # not reached max_pages.
+      if self._last_page != self.max_pages and \
+          self.get_page_items(self._last_page + 1):
         # It has one more page at least
         self._last_page = self._last_page + 1
     else:

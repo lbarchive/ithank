@@ -272,6 +272,30 @@ class NoMemcacheNoVersion(unittest.TestCase):
         ), pger.navigation_list)
 
 
+  def testMaxPages(self):
+
+    wipe_test_data()
+    # 11 Pages
+    create_data(110)
+
+    pger = Paginator('SELECT * FROM Data', page=1, page_items=10,
+      page_band_expand=1, max_pages=5, total_items=110, cache=None)
+
+    self.assertEqual((
+        None,
+        [1, 2, 0, 4, 5],
+        2,
+        ), pger.navigation_list)
+
+    pger.page = 6
+    
+    self.assertEqual((
+        4,
+        [1, 2, 0, 4, 5],
+        None,
+        ), pger.navigation_list)
+
+
 class MemcacheNoVersion(unittest.TestCase):
 
   def testNoEntities(self):
