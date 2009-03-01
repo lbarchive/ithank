@@ -1,0 +1,4 @@
+{% load i18n %}
+<div id="topbar">
+{% if current_user %}{% blocktrans %}Hi! <b>{{ nickname }}</b>{% endblocktrans %} | {% trans "Settings" %} | <a href="{{ logout_url }}">{% trans "Sign out" %}</a>{% else %}<a href="{{ login_url }}">{% trans "Sign in" %}</a>{% endif %}
+</div>

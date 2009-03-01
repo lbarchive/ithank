@@ -4,7 +4,7 @@
  */
 
 body {
-  font-family: Georgia;
+  font-family: "Times New Roman", Serif;
   background-color: #f5ede3;
   color: #000;
   }
@@ -36,6 +36,19 @@ pre {
   margin: 10px;
   background-color: #eee;
   border: 1px solid #ccc;
+  }
+
+#topbar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 3px 5px;
+  font-family: Sans-serif;
+  font-size: small;
+  }
+
+#topbar a {
+  font-weight: normal;
   }
 
 #wrap {

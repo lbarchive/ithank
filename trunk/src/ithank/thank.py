@@ -1,11 +1,10 @@
 
 from base64 import urlsafe_b64encode, urlsafe_b64decode
-from md5 import md5
-from os import urandom
+from random import Random
 from struct import pack, unpack
-from time import time
-import logging
+import logging as log
 
+from google.appengine.api import memcache
 from google.appengine.api import users
 from google.appengine.ext import db
 
@@ -23,7 +22,7 @@ class Thank(db.Model):
   published = db.DateTimeProperty(verbose_name='Published', required=True, auto_now_add=True)
   user = db.UserProperty(verbose_name='User', required=True, auto_current_user_add=True)
   flags = db.IntegerProperty(verbose_name='Flags', default=0)
-  flagers = db.ListProperty(users.User, verbose_name='Flagers')
+  flaggers = db.ListProperty(users.User, verbose_name='Flaggers')
 
   def encode_thank_id(self):
     '''
@@ -35,13 +34,17 @@ class Thank(db.Model):
      - Encodes with Base64-url-friendly,
      - Replaces padding = with period.
     '''
-
+    
+    if '_thank_id' in dir(self):
+      return self._thank_id
+    
     id = self.key().id()
 
     if config.debug:
-      logging.debug('encode_thank_id: %d' % id)
+      log.debug('encode_thank_id: %d' % id)
 
-    return urlsafe_b64encode(pack('<Q', id).rstrip('\x00')).replace('=', '.')
+    self._thank_id = urlsafe_b64encode(pack('<Q', id).rstrip('\x00')).replace('=', '.')
+    return self._thank_id
 
   @classmethod
   def decode_thank_id(cls, thank_id):
@@ -54,19 +57,21 @@ class Thank(db.Model):
      - Appends \\x00 to make the length of 8,
      - Unpacks with litten-endian long long.
     '''
+    
+    thank_id = str(thank_id)
 
     if config.debug:
-      logging.debug('decode_thank_id: %s' % thank_id)
+      log.debug('decode_thank_id: %s' % thank_id)
 
     try:
       thank_id = urlsafe_b64decode(thank_id.replace('.', '='))
       id = unpack('<Q', thank_id + '\x00' * (8 - len(thank_id)))
     except:
-      logging.warning('Invalid thank_id: %s' % thank_id)
+      log.warning('Invalid thank_id: %s' % thank_id)
       return None
 
     if config.debug:
-      logging.debug('decoded id: %d' % id)
+      log.debug('decoded id: %d' % id)
 
     return id
 
@@ -80,10 +85,7 @@ class Thank(db.Model):
     if not id:
       return None
 
-    thx = Thank.get_by_id(id)
-    if len(thx) == 1:
-      return thx[0]
-    return None
+    return get(id)
 
   def create_link(self):
 
@@ -96,44 +98,73 @@ class Thank(db.Model):
     return '%s %s' % (self.subject[:(140 - 1 - len(link))], link)
 
 
-def generate_unique_key_name(user=None):
+def _cache(thx):
+
+  if not memcache.set('Thank_%d' % thx.key().id(), thx, config.thank_cache):
+    log.error('Unable to cache Thank_%d' % thx.key().id())
+
+
+def get(id):
+
+  thx = memcache.get('Thank_%d' % id)
+  if thx:
+    return thx
+  
+  thx = Thank.get_by_id(id)
+  if thx:
+    return thx[0]
+  else:
+    log.warning('Thank %d is not in datastore' % id)
+    return None
+
+
+def get_random(count, language=None):
   '''
-  Generates unique key_name by User, current time, and 128 bits radnom number.
-
-  @param user: If None, it will try to get current user.
-  @return: A 12 bytes string with 't' prefixing.
-  @rtype: str
+  It may return duplicate items
   '''
 
-  if not user:
-    user = users.get_current_user()
-    #FIXME if the user isn't logged in
-    # Raise not login
+  if language:
+    if language not in config.dict_valid_languages:
+      log.warning('Invalid language: %s' % language)
+      raise ValueError('Invalid language: %s' % language)
+    counter_key = 'thank_%s' % language
+  else:
+    counter_key = 'thank'
 
-  m = md5(str(time.time()) + urandom(8) + user.email())
-  return 't' + urlsafe_b64encode(m.digest())[:12]
+  counter = Counter(counter_key).count
+  log.debug('%s %d' % (counter_key, counter))
+  rv = Random()
+  q = Thank.all()
+  if language:
+    q.filter('language =', language)
+
+  random_items = []
+  while len(random_items) < count:
+    item = q.fetch(1, offset=int(rv.uniform(0, counter)))
+    if item:
+      # cache it
+      _cache(item[0])
+      random_items += item
+  
+  return random_items
 
 
-@transaction
-def add_t(name, language, subject, story):
-#  thx = Thank(key_name=generate_unique_key_name(), name=name,
-#      language=language, subject=subject, story=story)
-  thx = Thank(name=name, language=language, subject=subject, story=story)
-  thx.put()
-  return thx
-
-
-#@transaction
 def increase_count_t(language):
   '''
   Increase two counter thank_count and thank_{language}_count
   '''
 
-  logging.debug('Increase counter thank and thank_%s' % language)
   thank_count = Counter('thank')
   thank_count.increment()
   thank_language_count = Counter('thank_%s' % language)
   thank_language_count.increment()
+
+
+@transaction
+def add_t(name, language, subject, story):
+  thx = Thank(name=name, language=language, subject=subject, story=story)
+  thx.put()
+  return thx
 
 
 def add(name, language, subject, story):
@@ -148,31 +179,48 @@ def add(name, language, subject, story):
   if len(name) < config.thank_min_name:
     raise ValueError('Name must be longer than %d characters!' % config.thank_min_name)
   if len(name) > config.thank_max_name:
-    logging.warning('Name too long: %s' % name[:config.thank_max_name])
+    log.warning('Name too long: %s' % name[:config.thank_max_name])
     raise ValueError('Name must be shorter than %d characters!' % config.thank_max_name)
 
   for lang in config.valid_languages:
     if lang[0] == language:
       break
   else:
-    logging.warning('Incorrect language: %s' % repr(language))
+    log.warning('Incorrect language: %s' % repr(language))
     raise ValueError('Incorrect language!')
     
   if len(subject) < config.thank_min_subject:
     raise ValueError('Subject must be longer than %d characters!' % config.thank_min_subject)
   if len(subject) > config.thank_max_subject:
-    logging.warning('Subject too long: %s' % subject[:config.thank_max_subject])
+    log.warning('Subject too long: %s' % subject[:config.thank_max_subject])
     raise ValueError('Subject must be shorter than %d characters!' % config.thank_max_subject)
 
   if len(story) < config.thank_min_story:
     raise ValueError('Story must be longer than %d characters!' % config.thank_min_story)
   if len(story) > config.thank_max_story:
-    logging.warning('Story too long: %d chars' % len(story))
+    log.warning('Story too long: %d chars' % len(story))
     raise ValueError('Story must be shorter than %d characters!' % config.thank_max_story)
 
   # Run add transaction
   thx = add_t(name, language, subject, story)
   if thx:
     increase_count_t(language)
+    _cache(thx)
+    # Clean feed's cache
+    memcache.delete_multi(['feed', 'feed_%s' % language])
 
+  return thx
+
+@transaction
+def flag(id, flagger):
+  # Load from datastore not memcache
+  thx = Thank.get_by_id(id)
+  if not thx:
+    log.warning('%s tried to flag Thank %d' % (flagger, id))
+    return
+  thx.flaggers += [flagger]
+  thx.flags = len(thx.flaggers)
+  thx.put()
+  # Cache it
+  _cache(thx)
   return thx

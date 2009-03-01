@@ -174,6 +174,8 @@ class Paginator(object):
     initialization.
     '''
 
+    return self.get_page_items(self.page)
+
   @property
   def first_page(self):
     '''
