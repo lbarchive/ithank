@@ -1,5 +1,5 @@
-<p>{{ thank.subject|striptags|escape }}</p>
-<p>{{ thank.story|striptags|linebreaks }}</p>
-{% if current_user %}
-Report
-{% endif %}
+{% load i18n ifin %}
+<p><a href="/t/{{ thank.encode_thank_id }}">{{ thank.subject|striptags|escape }}</a></p>
+<p>{{ thank.story|striptags|escape|linebreaks }}</p>
+{% if current_user %}{% ifin current_user thank.flaggers %}{% trans "Flagged" %}{% else %}<a href="javascript:flag('{{ thank.encode_thank_id }}')" class="flag">{% trans "Flag as inappropriate" %}</a>{% endifin %}{% endif %}
+{% blocktrans with thank.name as thank_name and thank.published|timesince as thank_published %}{{ thank_name }} thanked {{ thank_published }} ago.{% endblocktrans %}

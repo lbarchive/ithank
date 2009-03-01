@@ -1,4 +1,5 @@
 from Cookie import BaseCookie
+import simplejson as json
 import logging
 import os
 import sys
@@ -180,3 +181,34 @@ if sys.version_info[:2] <= (2, 5):
           cls_ns[propname] = property(self.fget, self.fset,
                                       fdel, self.__doc__)
           return cls_ns[propname]
+
+
+def send_json(response, obj, callback, error=False):
+  """Sends JSON to client-side"""
+  json_result = obj
+  if isinstance(obj, (str, unicode)):
+    json_result = json.loads(obj)
+  if not error:
+    json_result['err'] = 0
+  json_result = json.dumps(obj)
+ 
+  response.headers['Content-Type'] = 'application/json'
+  if callback:
+    response.out.write('%s(%s)' % (callback, json_result))
+  else:
+    response.out.write(json_result)
+
+
+def json_error(response, err, callback, err_msg=''):
+  """Sends error in JSON to client-side
+  """
+  if err_msg == '':
+    errors = {
+      1: _('Invalid thank_id'),
+      2: _('Login required'),
+      3: _('Invalid language'),
+      }
+    err_msg = errors[err]
+
+  send_json(response, {'err': err, 'err_msg': err_msg}, callback, True)
+

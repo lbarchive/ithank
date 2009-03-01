@@ -9,3 +9,8 @@ LANGUAGES = (
 
 # This is a default language
 LANGUAGE_CODE = 'en'
+
+# Custom template tags
+INSTALLED_APPS = (
+    'ithank',
+    )

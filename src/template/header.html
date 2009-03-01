@@ -1,5 +1,10 @@
+{% load i18n %}
 <div id="header">
-<div class="title"><h1>I Thank</h1></div>
+<div class="title"><h1>{% trans "I Thank" %}</h1></div>
 <div class="nav">
-<a href="/">Home</a> <a href="/say">Say Thanks</a></div>
+<a href="/">{% trans "Home" %}</a>
+<a href="/browse">{% trans "Browse" %}</a>
+<a href="/say">{% trans "Say Thanks" %}</a>
 </div>
+</div>
+{% include "messages.html" %}
