@@ -24,5 +24,22 @@ handlers:
 - url: /test.*
   script: gaeunit.py
 
+- url: /t/.*
+  script: browse.py
+- url: /browse.*
+  script: browse.py
+- url: /flag.json
+  script: browse.py
+
+- url: /random.json
+  script: API.py
+- url: /feed.*
+  script: API.py
+
+- url: /thank
+  script: thank_now.py
+- url: /preview.json
+  script: thank_now.py
+
 - url: /.*
   script: index.py

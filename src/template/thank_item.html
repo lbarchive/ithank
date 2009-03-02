@@ -1,5 +1,10 @@
 {% load i18n ifin %}
-<p><a href="/t/{{ thank.encode_thank_id }}">{{ thank.subject|striptags|escape }}</a></p>
-<p>{{ thank.story|striptags|escape|linebreaks }}</p>
-{% if current_user %}{% ifin current_user thank.flaggers %}{% trans "Flagged" %}{% else %}<a href="javascript:flag('{{ thank.encode_thank_id }}')" class="flag">{% trans "Flag as inappropriate" %}</a>{% endifin %}{% endif %}
-{% blocktrans with thank.name as thank_name and thank.published|timesince as thank_published %}{{ thank_name }} thanked {{ thank_published }} ago.{% endblocktrans %}
+<div class="thank">
+<div class="subject"><a href="{{ thank.create_link }}">{{ thank.subject|striptags|escape }}</a></div>
+<div class="story">{% if cut_story %}{{ thank.story|striptags|escape|linebreaks|truncatewords_html:50 }}{% else %}{{ thank.story|striptags|escape|linebreaks }}{% endif %}</div>
+<div class="thanker">{% blocktrans with thank.name|striptags|escape as thank_name and thank.published|timesince as thank_published %}{{ thank_name }} thanked {{ thank_published }} ago.{% endblocktrans %}</div>
+<div class="stuff">
+{% if current_user %}{% ifin current_user thank.flaggers %}{% trans "Flagged" %}{% else %}<div class="flag-button"><a href="javascript:flag('{{ thank.encode_thank_id }}')" class="flag">{% trans "Flag as inappropriate" %}</a></div>{% endifin %}{% endif %}
+{% if cut_story %}<div class="read-all-button"><a href="{{ thank.create_link }}">{% trans "Read all" %}</a></div>{% endif %}
+</div>
+</div>

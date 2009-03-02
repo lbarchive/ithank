@@ -1,10 +1,27 @@
-{% load i18n %}
+{% load i18n %}{% get_current_language as LANGUAGE_CODE %}
 <div id="header">
-<div class="title"><h1>{% trans "I Thank" %}</h1></div>
-<div class="nav">
-<a href="/">{% trans "Home" %}</a>
-<a href="/browse">{% trans "Browse" %}</a>
-<a href="/say">{% trans "Say Thanks" %}</a>
+{% ifnotequal LANGUAGE_CODE "en" %}
+<div class="title">
+<h1><a href="/">{% trans "I Thank" %}</a></h1>
 </div>
+<div class="nav">
+<a href="/about">{% trans "Abort" %}</a>
+<a href="#">{% trans "Blog" %}</a>
+<i><a href="/thank">{% trans "Thank Now" %}</a></i>
+<a href="/browse">{% trans "Browse" %}</a>
+<a href="#">{% trans "Help" %}</a>
+</div>
+{% else %}
+<div class="title">
+<h1><a href="/"><img src="/img/{{ LANGUAGE_CODE }}-header.png" class="language-hover" title="{% trans "I Thank" %}"/></a></h1>
+</div>
+<div class="nav">
+<a href="/about"><img src="/img/{{ LANGUAGE_CODE }}-about.png" class="language-hover" title="{% trans "Abort" %}"/></a>
+<a href="#"><img src="/img/{{ LANGUAGE_CODE }}-blog.png" class="language-hover" title="{% trans "Blog" %}"/></a>
+<i><a href="/thank"><img src="/img/{{ LANGUAGE_CODE }}-thank-now.png" class="language-hover" title="{% trans "Thank Now" %}"/></a></i>
+<a href="/browse"><img src="/img/{{ LANGUAGE_CODE }}-browse.png" class="language-hover" title="{% trans "Browse" %}"/></a>
+<a href="#"><img src="/img/{{ LANGUAGE_CODE }}-help.png" class="language-hover" title="{% trans "Help" %}"/></a>
+</div>
+{% endifnotequal %}
 </div>
 {% include "messages.html" %}

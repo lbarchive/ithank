@@ -138,14 +138,19 @@ def get_random(count, language=None):
   if language:
     q.filter('language =', language)
 
+  log.debug('x')
   random_items = []
-  while len(random_items) < count:
+  log.debug(len(random_items))
+  log.debug(counter)
+  while len(random_items) < counter:
     item = q.fetch(1, offset=int(rv.uniform(0, counter)))
     if item:
       # cache it
       _cache(item[0])
       random_items += item
-  
+ 
+  log.debug('x')
+  log.debug(random_items)
   return random_items
 
 

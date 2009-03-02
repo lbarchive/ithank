@@ -1,0 +1,112 @@
+import logging as log
+import os
+
+from google.appengine.api import memcache
+from google.appengine.ext import webapp
+from google.appengine.ext.webapp import template
+from google.appengine.ext.webapp.util import run_wsgi_app
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'conf.settings'
+from django.conf import settings
+# Force Django to reload settings
+settings._target = None
+from django.utils import feedgenerator
+
+from ithank import thank
+from ithank.util import I18NRequestHandler, send_json
+import config
+
+
+class RandomJSON(I18NRequestHandler):
+
+  def get(self):
+ 
+    count = self.request.get('count', 1)
+    if count < 1:
+      count = 1
+    if count > config.thanks_random_max_items:
+      count = config.thanks_random_max_items
+    language = self.request.get('language') 
+    callback = self.request.get('callback') 
+
+    if language:
+      if language not in config.dict_valid_languages:
+        log.warning('Invalid language: %s' % language)
+        json.error(self.response, 3)
+        return
+      counter_key = 'thank_%s' % language
+      query = "SELECT * FROM Thank WHERE language = '%s' ORDER BY published DESC" % language
+      lang_path = language + '/'
+      title = config.dict_valid_languages[language]
+    else:
+      counter_key = 'thank'
+      query = 'SELECT * FROM Thank ORDER BY published DESC'
+      lang_path = ''
+      title = _('All')
+
+    thanks = thank.get_random(count, language)
+    # TODO
+
+
+class Feed(I18NRequestHandler):
+
+  def get(self, language, page):
+ 
+    page = 1 if not page else int(page)
+    # TODO simple24
+    if language:
+      if language not in config.dict_valid_languages:
+        log.warning('Invalid language: %s' % language)
+        self.error(500)
+        self.response.out.write('Invalid language: %s' % language)
+        return
+      mem_key = 'feed_%s' % language
+    else:
+      mem_key = 'feed'
+
+    raw_feed = memcache.get(mem_key)
+    if raw_feed:
+      self.response.out.write(raw_feed)
+      return
+
+    # TODO check cache
+    feed = feedgenerator.Rss201rev2Feed(title=_('I Thank'), link=config.base_URI, description=_('Say thanks!'))
+    
+    query = thank.Thank.all()
+    if language:
+      feed.language = language
+      query.filter('language =', language)
+    query.order('-published')
+
+    thanks = query.fetch(config.thanks_feed_items)
+    for thx in thanks:
+      # TODO strips tags
+      feed.add_item(
+          title=template.Template('{{ subject|striptags }}').render(template.Context({'subject': thx.subject})),
+          link=thx.create_link(),
+          description=template.Template('{{ story|striptags|linebreaks }}').render(template.Context({'story': thx.story})),
+          author_name=template.Template('{{ name|striptags }}').render(template.Context({'name': thx.name})),
+          pubdate=thx.published, unique_id=thx.create_link())
+
+    raw_feed = feed.writeString('utf8')
+    self.response.out.write(raw_feed)
+  
+    # Cache it
+    if not memcache.set(mem_key, raw_feed, config.feed_cache):
+      log.error('Unable to cache %s' % mem_key)
+
+
+application = webapp.WSGIApplication([
+    (r'/random\.json', RandomJSON),
+    ('/feed/?([a-zA-Z_]*)/?([0-9]*)/?', Feed),
+    ],
+    debug=config.debug)
+
+
+def main():
+  """Main function"""
+  run_wsgi_app(application)
+
+
+if __name__ == "__main__":
+  main()

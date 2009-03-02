@@ -1,3 +1,4 @@
+{% load i18n %}
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -12,7 +13,9 @@
 <div id="wrap">
 {% include "header.html" %}
 <div id="content">
-Thanks! <a href="{{ thank_link }}">View it</a> or <a href="http://twitter.com/home?status={{ tweet_message|urlencode }}">Tweet</a>!
+<div id="thanked">
+{% trans "Thank you for thanking!" %} {% blocktrans with tweet_message|urlencode as tweet_m %}You can <a href="{{ thank_link }}">read it</a> or <a href="http://twitter.com/home?status={{ tweet_m }}">tweet it</a>!{% endblocktrans %}
+</div>
 </div>
 {% include "footer.html" %}
 </div>
