@@ -1,0 +1,66 @@
+{% load i18n %}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>{% trans "I Thank" %} » {% trans "Thank Now" %}</title>
+  <link href="/css/ithank.css" type="text/css" rel="stylesheet"/>
+  <link href="/css/thank_now.css" type="text/css" rel="stylesheet"/>
+  <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script src="/js/ithank.js" type="text/javascript"></script>
+  <script src="/js/thank_now.js" type="text/javascript"></script>
+{{ before_head_end }}
+</head>
+<body>
+<div id="wrap">
+{% include "header.html" %}
+<div id="content">
+<form action="/thank" method="post">
+<div class="field">
+<div class="field-name">{% trans "Name" %}</div>
+<input id="name" type="text" name="name" value="{{ name }}" maxlength="{{ name_maxlength }}"/>
+</div>
+
+<div class="field">
+<div class="field-name">{% trans "Language" %}</div>
+<select id="language" name="language">
+<option>Select</option>
+{% for lang in valid_languages %}
+<option value="{{ lang.0 }}"{% ifequal language lang.0 %} selected{% endifequal %}>{{ lang.1 }}</option>
+{% endfor %}
+</select> <input type="button" onclick="detect_language()" value="Detect"/>
+</div>
+
+<div class="field">
+<div class="field-name">{% trans "Subject" %}</div><div class="counter"><span id="subject-counter"></span> / {{ subject_maxlength }}</div>
+<div class="field-value">
+<input id="subject" type="text" name="subject" value="{{ subject }}" maxlength="{{ subject_maxlength }}">
+</div>
+</div>
+
+<div class="field">
+<div class="field-name">{% trans "Story" %}</div><div class="counter"><span id="story-counter"></span> / {{ story_maxlength }}</div>
+<div class="field-value">
+<textarea id="story" name="story" rows="10">{{ story }}</textarea>
+</div>
+</div>
+<div class="field">
+<div class="field-value">
+<input type="button" value="{% trans "Preview" %}" onclick="preview_thank()"/> <input type="submit" value="{% trans "Thank!" %}"/>
+</div>
+</div>
+</form>
+<div id="notice">
+{% trans 'Please write with care, you are not allowed to edit or to delete after thanking.' %}<br/>
+{% trans 'By clicking on the “Thank!” button above means that you accept the <a href="/terms">Terms</a>.' %}
+</div>
+<div id="preview">
+</div>
+</div>
+{% include "footer.html" %}
+</div>
+{{ before_body_end }}
+</body>
+</html>

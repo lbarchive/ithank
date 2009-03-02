@@ -5,24 +5,28 @@
 
 body {
   font-family: "Times New Roman", Serif;
-  background-color: #f5ede3;
-  color: #000;
+  background: #f9a url('/img/bg.png') repeat;
+  color: #412;
   }
 
 a {
   font-weight: bold;
   text-decoration: none;
-  color: #3366cc;
+  color: #66f;
   }
 
 a:hover {
   text-decoration: underline;
-  color: #e55c00;
+  color: #c23;
   }
 
 a.uri {
-  color: #888;
+  color: #66f;
   font-family: monospace;
+  }
+
+a img {
+  border: none;
   }
 
 img.right {
@@ -57,22 +61,33 @@ pre {
   text-align: center;
   }
 
-#header {
+#header>.title a {
   font-family: Times;
+  color: #b22;
   }
 
-#header>.title {
-  font-size: 18px;
-  color: #e55c00;
-  }
-
-.nav>a {
-  font-family: Arial;
-  font-size: 16px;
+.nav a {
+  font-family: Serif;
+  font-size: 12px;
   font-weight: bold;
-  font-variant: small-caps;
-  color: #77aa77;
+  font-style: italic;
+  text-decoration: none;
+  color: #393;
   margin: 0 0.5em;
+  }
+
+.nav a:hover {
+  color: #fff;
+  }
+
+/* Messages */
+#messages > div.message {
+  }
+
+#messages > div.error {
+  border: 2px solid #f00;
+  background-color: #f88;
+  color: #000;
   }
 
 #content {
@@ -83,4 +98,57 @@ pre {
 #footer {
   clear: both;
   margin-top: 1em;
+  color: #777;
+  font-family: Arial;
+  font-size: 12px;
   }
+
+/* Navigation */
+.navigation.pages {
+  margin: 10px 0;
+  text-align: center;
+  }
+
+/* Thank */
+.thank {
+  clear: both;
+  margin-top: 20px;
+  }
+
+.thank .thanker {
+  float: right;
+  }
+
+.thank .stuff {
+  clear: both;
+  padding-bottom: 20px;
+  }
+
+.thank .stuff .flag-button {
+  float: left;
+  }
+.thank .stuff .read-all-button {
+  float: right;
+  }
+
+/* Miscellaneous */
+#random-thank {
+  margin: 10px 0;
+  color: #080;
+  font-family: Times New Roman;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  }
+
+#thanked {
+  margin: 10px 0;
+  font-size: 16px;
+  text-align: center;
+  }
+
+.feed {
+  text-align: center;
+  }
+

@@ -7,8 +7,9 @@
   <title>{% trans "I Thank" %} » {{ title }} » {% blocktrans %}Page {{ current_page }}{% endblocktrans %}</title>
   <link href="/css/ithank.css" type="text/css" rel="stylesheet"/>
   <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+  <link rel="alternate" type="application/rss+xml" title="{% trans "RSS" %}" href="{{ feed_link }}" />
   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-  <script src="/js/flag.js" type="text/javascript"></script>
+  <script src="/js/ithank.js" type="text/javascript"></script>
 {{ before_head_end }}
 </head>
 <body>
@@ -22,6 +23,7 @@
 {% for page in nav_list %} {% ifequal page 0 %}...{% else %}{% ifequal page current_page %}{{ page }}{% else %}<a href="/browse/{{ lang_path }}{{ page }}" class="item">{{ page }}</a>{% endifequal %}{% endifequal %}{% endfor %}
 {% if next %}<a href="/browse/{{ lang_path }}{{ next }}" class="next">{% trans "Next Page" %}</a>{% endif %}
 </div>
+<div class="feed"><a href="{{ feed_link }}">{% trans "Grab this Feed!" %}</a></div>
 <div class="navigation language">
 Browse other language: <a href="/browse" class="item">{% trans "All" %}</a>{% for lang in valid_languages %} <a href="/browse/{{ lang.0 }}" class="item">{{ lang.1 }}</a>{% endfor %}
 </div>

@@ -1,4 +1,3 @@
-google.load("jquery", "1");
 google.load("language", "1");
 
 /*
@@ -33,12 +32,34 @@ function detect_language() {
     });
   }
 
-/*
-function init_say() {
+
+function preview_thank() {
+  var query_url = 'http://i-thank.appspot.com/';
+  if (window.location.href.indexOf('localhost') >= 0)
+    query_url = 'http://localhost:8080/';
+  $.post(query_url + 'preview.json', {name: $('#name').val(), language: $('#language').val(), subject: $('#subject').val(), story: $('#story').val()}, function(json) {
+    if (json.err == 0)
+      $("#preview").html('<div class="preview-header">' + json.preview_header + '</div>' + json.thank_preview)
+    else
+      $('#messages').html(json.err_msg);
+    }, 'json');
+  }
+
+
+function init_thank_now() {
+  /*
   var langs = google.language.Languages;
   for (var lang in langs)
     $('<option value="' + langs[lang] + '">' + prettify_lang_name(lang) + '</option>').appendTo($('#language'));
+  */
+  $('#subject').keypress(function() {
+      $('#subject-counter').text($(this).val().length);
+      })
+      .keypress();
+  $('#story').keypress(function() {
+      $('#story-counter').text($(this).val().length);
+      })
+      .keypress();
   }
 
-google.setOnLoadCallback(init_say);
-*/
+google.setOnLoadCallback(init_thank_now);

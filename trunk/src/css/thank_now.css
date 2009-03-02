@@ -1,0 +1,40 @@
+div.field {
+  margin-top: 10px;
+  }
+
+div.field-name {
+  float: left;
+  width: 100px;
+  color: #f40;
+  font-weight: bold;
+  font-family: Times;
+  }
+
+div.counter {
+  float: right;
+  color: #0a0;
+  font-weight: bold;
+  font-family: Arial;
+  }
+
+div.field-value {
+  clear: both;
+  text-align: center;
+  }
+
+#subject, #story {
+  width: 580px;
+  }
+
+#notice {
+  text-align: center;
+  color: #f00;
+  }
+
+.preview-header {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 24px;
+  color: #0a0;
+  font-family: Sans;
+  }

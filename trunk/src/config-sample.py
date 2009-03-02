@@ -2,6 +2,14 @@ import os
 
 debug = True
 
+# TODO
+site_maintenance = False
+site_read_only = False
+
+enable_sitemap = True
+enable_feed = True
+enable_API = True
+
 # Cache
 browse_page_cache = 3600
 feed_cache = 3600

@@ -5,11 +5,13 @@ import os
 import sys
 import UserDict
 
+from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 
 from django.utils import translation
 
+from ithank import ERROR_MESSAGES
 import config
 
 
@@ -203,12 +205,19 @@ def json_error(response, err, callback, err_msg=''):
   """Sends error in JSON to client-side
   """
   if err_msg == '':
-    errors = {
-      1: _('Invalid thank_id'),
-      2: _('Login required'),
-      3: _('Invalid language'),
-      }
-    err_msg = errors[err]
+    err_msg = ERROR_MESSAGES[err]
 
   send_json(response, {'err': err, 'err_msg': err_msg}, callback, True)
+
+
+def set_topbar_vars(template_values, url):
+
+  current_user = users.get_current_user()
+  template_values['current_user'] = current_user
+  if current_user:
+    template_values['nickname'] = current_user.nickname()
+    template_values['logout_url'] = users.create_logout_url(url)
+  else:
+    template_values['login_url'] = users.create_login_url(url)
+
 
