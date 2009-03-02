@@ -15,6 +15,7 @@ from django.utils import feedgenerator
 from ithank import thank
 from ithank.util import I18NRequestHandler, send_json
 import config
+import simple24 as s24
 
 
 class RandomJSON(I18NRequestHandler):
@@ -53,7 +54,7 @@ class Feed(I18NRequestHandler):
   def get(self, language, page):
  
     page = 1 if not page else int(page)
-    # TODO simple24
+    
     if language:
       if language not in config.dict_valid_languages:
         log.warning('Invalid language: %s' % language)
@@ -61,16 +62,23 @@ class Feed(I18NRequestHandler):
         self.response.out.write('Invalid language: %s' % language)
         return
       mem_key = 'feed_%s' % language
+      feed_url = '%sfeed/%s/' % (config.base_URI, language)
     else:
       mem_key = 'feed'
+      feed_url = '%sfeed/' % config.base_URI
 
     raw_feed = memcache.get(mem_key)
     if raw_feed:
       self.response.out.write(raw_feed)
       return
 
-    # TODO check cache
-    feed = feedgenerator.Rss201rev2Feed(title=_('I Thank'), link=config.base_URI, description=_('Say thanks!'))
+    feed = feedgenerator.Rss201rev2Feed(
+        title=_('I Thank'),
+        link=config.base_URI,
+        description=_('Say thanks!'),
+        feed_url=feed_url,
+        feed_copyright='Creative Commons Attribution-Share Alike 3.0 Unported License',
+        )
     
     query = thank.Thank.all()
     if language:
@@ -80,7 +88,6 @@ class Feed(I18NRequestHandler):
 
     thanks = query.fetch(config.thanks_feed_items)
     for thx in thanks:
-      # TODO strips tags
       feed.add_item(
           title=template.Template('{{ subject|striptags }}').render(template.Context({'subject': thx.subject})),
           link=thx.create_link(),
@@ -90,10 +97,13 @@ class Feed(I18NRequestHandler):
 
     raw_feed = feed.writeString('utf8')
     self.response.out.write(raw_feed)
-  
+    
     # Cache it
     if not memcache.set(mem_key, raw_feed, config.feed_cache):
       log.error('Unable to cache %s' % mem_key)
+
+    # Simple24
+    s24.incr(mem_key)
 
 
 application = webapp.WSGIApplication([

@@ -1,4 +1,4 @@
-{% load i18n %}{% get_current_language as LANGUAGE_CODE %}
+{% load i18n ifin %}{% get_current_language as LANGUAGE_CODE %}
 <div id="header">
 {% ifnotequal LANGUAGE_CODE "en" %}
 <div class="title">
@@ -6,10 +6,10 @@
 </div>
 <div class="nav">
 <a href="/about">{% trans "Abort" %}</a>
-<a href="#">{% trans "Blog" %}</a>
+<a href="http://ithank.wordpress.com/">{% trans "Blog" %}</a>
 <i><a href="/thank">{% trans "Thank Now" %}</a></i>
-<a href="/browse">{% trans "Browse" %}</a>
-<a href="#">{% trans "Help" %}</a>
+<a href="/browse/{% ifin LANGUAGE_CODE config.keys_valid_languages %}{{ LANGUAGE_CODE }}/{% endifin %}">{% trans "Browse" %}</a>
+<a href="http://groups.google.com/group/ithank">{% trans "Help" %}</a>
 </div>
 {% else %}
 <div class="title">
@@ -17,10 +17,10 @@
 </div>
 <div class="nav">
 <a href="/about"><img src="/img/{{ LANGUAGE_CODE }}-about.png" class="language-hover" title="{% trans "Abort" %}"/></a>
-<a href="#"><img src="/img/{{ LANGUAGE_CODE }}-blog.png" class="language-hover" title="{% trans "Blog" %}"/></a>
+<a href="http://ithank.wordpress.com/"><img src="/img/{{ LANGUAGE_CODE }}-blog.png" class="language-hover" title="{% trans "Blog" %}"/></a>
 <i><a href="/thank"><img src="/img/{{ LANGUAGE_CODE }}-thank-now.png" class="language-hover" title="{% trans "Thank Now" %}"/></a></i>
-<a href="/browse"><img src="/img/{{ LANGUAGE_CODE }}-browse.png" class="language-hover" title="{% trans "Browse" %}"/></a>
-<a href="#"><img src="/img/{{ LANGUAGE_CODE }}-help.png" class="language-hover" title="{% trans "Help" %}"/></a>
+<a href="/browse/{% ifin LANGUAGE_CODE config.keys_valid_languages %}{{ LANGUAGE_CODE }}/{% endifin %}"><img src="/img/{{ LANGUAGE_CODE }}-browse.png" class="language-hover" title="{% trans "Browse" %}"/></a>
+<a href="http://groups.google.com/group/ithank"><img src="/img/{{ LANGUAGE_CODE }}-help.png" class="language-hover" title="{% trans "Help" %}"/></a>
 </div>
 {% endifnotequal %}
 </div>

@@ -1,0 +1,49 @@
+{% load i18n %}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>{% trans "I Thank" %} » {% trans "About" %}</title>
+  <link href="/css/ithank.css" type="text/css" rel="stylesheet"/>
+  <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script src="/js/ithank.js" type="text/javascript"></script>
+{{ config.before_head_end }}
+</head>
+<body>
+{% include "topbar.html" %}
+<div id="wrap">
+{% include "header.html" %}
+<div id="content">
+<h2>{% trans "What Is This?" %}</h2>
+{% trans "This is a place that can encourage you thanking people or things. We may be aware of whom have really being kind to us, but we never said a word for that. Now, it's the time!" %}
+
+<h2>{% trans "Why Created This?" %}</h2>
+{% trans "Except as described above, the creator of I Thank was afraid that today might be his last day. Do not be waiting for the perfect moments, you do not need to wait, because every single second is the right time to thank! Go thanking now!" %}
+
+<h2>{% trans "Where Is My Language?" %}</h2>
+{% trans 'Please ask for the language you spoken at <a href="http://groups.google.com/group/ithank">Discussion Group</a>.' %}
+
+<h2>{% trans "Follow I Thank" %}</h2>
+{% trans 'You can follow <a href="https://twitter.com/ithank">@IThank</a> on Twitter.' %}
+
+<h2>{% trans "This Project" %}</h2>
+{% trans 'The code of I Thank is open-sourced, you can <a href="http://code.google.com/p/ithank/">find more</a> on Google Code.' %}
+
+<h2>{% trans "Help I Thank" %}</h2>
+{% trans "There are many ways that you could help. You can:" %}
+<ul>
+<li>{% trans 'Help translate - The code has already supported localization, but need people to help translate. Please tell us at <a href="http://groups.google.com/group/ithank">Discussion Group</a>.' %}</li>
+<li>{% trans 'Ideas - Free feel to tell us at <a href="http://groups.google.com/group/ithank">Discussion Group</a> or <a href="http://code.google.com/p/ithank/issues/list">Issue Tracker</a>.' %}</li>
+<li>{% trans 'Submit bug report - If you encounter any bugs, please submit bug report at <a href="http://code.google.com/p/ithank/issues/list">Issue Tracker</a>.' %}</li>
+<li>{% trans "Extend I Thank - Use API to extend or join to code." %}</li>
+<li>{% trans "Share with everyone - Pass the links of I Thank to everyone!" %}</li>
+<li>{% trans "Flag bad contents." %}</li>
+</ul>
+</div>
+{% include "footer.html" %}
+</div>
+{{ config.before_body_end }}
+</body>
+</html>

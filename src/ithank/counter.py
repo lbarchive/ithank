@@ -29,9 +29,13 @@ class MemcachedCount(object):
     def __init__(self, name):
         self.key = 'MemcachedCount' + name
 
-    def get_count(self):
+    def get_count(self, real_count=False):
         value = memcache.get(self.key)
         if value is None:
+            if real_count:
+                # This is necessary to make sure get count from datastore after
+                # cleaning up memcache.
+                return None
             return 0
         else:
             return string.atoi(value) - MemcachedCount.DELTA_ZERO
@@ -98,7 +102,7 @@ class Counter(object):
         return count 
 
     def get_count(self, nocache=False):
-        total = self.memcached.count
+        total = self.memcached.get_count(real_count=True)
         if nocache or total is None:
             return self.get_count_and_cache()
         else:

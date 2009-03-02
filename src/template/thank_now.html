@@ -11,7 +11,7 @@
   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
   <script src="/js/ithank.js" type="text/javascript"></script>
   <script src="/js/thank_now.js" type="text/javascript"></script>
-{{ before_head_end }}
+{{ config.before_head_end }}
 </head>
 <body>
 <div id="wrap">
@@ -20,28 +20,28 @@
 <form action="/thank" method="post">
 <div class="field">
 <div class="field-name">{% trans "Name" %}</div>
-<input id="name" type="text" name="name" value="{{ name }}" maxlength="{{ name_maxlength }}"/>
+<input id="name" type="text" name="name" value="{{ name }}" maxlength="{{ config.thank_max_name }}"/>
 </div>
 
 <div class="field">
 <div class="field-name">{% trans "Language" %}</div>
 <select id="language" name="language">
 <option>Select</option>
-{% for lang in valid_languages %}
+{% for lang in config.valid_languages %}
 <option value="{{ lang.0 }}"{% ifequal language lang.0 %} selected{% endifequal %}>{{ lang.1 }}</option>
 {% endfor %}
 </select> <input type="button" onclick="detect_language()" value="Detect"/>
 </div>
 
 <div class="field">
-<div class="field-name">{% trans "Subject" %}</div><div class="counter"><span id="subject-counter"></span> / {{ subject_maxlength }}</div>
+<div class="field-name">{% trans "Subject" %}</div><div class="counter"><span id="subject-counter"></span> / {{ config.thank_max_subject }}</div>
 <div class="field-value">
-<input id="subject" type="text" name="subject" value="{{ subject }}" maxlength="{{ subject_maxlength }}">
+<input id="subject" type="text" name="subject" value="{{ subject }}" maxlength="{{ config.thank_max_subject }}">
 </div>
 </div>
 
 <div class="field">
-<div class="field-name">{% trans "Story" %}</div><div class="counter"><span id="story-counter"></span> / {{ story_maxlength }}</div>
+<div class="field-name">{% trans "Story" %}</div><div class="counter"><span id="story-counter"></span> / {{ config.thank_max_story }}</div>
 <div class="field-value">
 <textarea id="story" name="story" rows="10">{{ story }}</textarea>
 </div>
@@ -61,6 +61,6 @@
 </div>
 {% include "footer.html" %}
 </div>
-{{ before_body_end }}
+{{ config.before_body_end }}
 </body>
 </html>

@@ -10,7 +10,7 @@
   <link rel="alternate" type="application/rss+xml" title="{% trans "RSS" %}" href="{{ feed_link }}" />
   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
   <script src="/js/ithank.js" type="text/javascript"></script>
-{{ before_head_end }}
+{{ config.before_head_end }}
 </head>
 <body>
 {% include "topbar.html" %}
@@ -23,13 +23,13 @@
 {% for page in nav_list %} {% ifequal page 0 %}...{% else %}{% ifequal page current_page %}{{ page }}{% else %}<a href="/browse/{{ lang_path }}{{ page }}" class="item">{{ page }}</a>{% endifequal %}{% endifequal %}{% endfor %}
 {% if next %}<a href="/browse/{{ lang_path }}{{ next }}" class="next">{% trans "Next Page" %}</a>{% endif %}
 </div>
-<div class="feed"><a href="{{ feed_link }}">{% trans "Grab this Feed!" %}</a></div>
+<div class="feed"><a href="{{ feed_link }}"><img src="/img/rss.png" title="{% trans "RSS feed" %}"/> {% trans "RSS feed" %}</a></div>
 <div class="navigation language">
-Browse other language: <a href="/browse" class="item">{% trans "All" %}</a>{% for lang in valid_languages %} <a href="/browse/{{ lang.0 }}" class="item">{{ lang.1 }}</a>{% endfor %}
+{% trans "Browse other language:" %} {% if language %}<a href="/browse" class="item">{% trans "All" %}</a>{% else %}{% trans "All" %}{% endif %}{% for lang in config.valid_languages %} {% ifequal lang.0 language %}{{ lang.1 }}{% else %}<a href="/browse/{{ lang.0 }}" class="item">{{ lang.1 }}</a>{% endifequal %}{% endfor %}
 </div>
 </div>
 {% include "footer.html" %}
 </div>
-{{ before_body_end }}
+{{ config.before_body_end }}
 </body>
 </html>

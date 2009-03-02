@@ -4,10 +4,10 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-  <title>I Thank » Say Thanks</title>
+  <title>{% trans "I Thank" %} » {% trans "Thanks for thanking!" %}</title>
   <link href="/css/ithank.css" type="text/css" rel="stylesheet"/>
   <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
-{{ before_head_end }}
+{{ config.before_head_end }}
 </head>
 <body>
 <div id="wrap">
@@ -19,6 +19,6 @@
 </div>
 {% include "footer.html" %}
 </div>
-{{ before_body_end }}
+{{ config.before_body_end }}
 </body>
 </html>

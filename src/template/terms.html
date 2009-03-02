@@ -1,0 +1,57 @@
+{% load i18n %}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>{% trans "I Thank" %} » {% trans "Terms" %}</title>
+  <link href="/css/ithank.css" type="text/css" rel="stylesheet"/>
+  <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script src="/js/ithank.js" type="text/javascript"></script>
+{{ config.before_head_end }}
+</head>
+<body>
+{% include "topbar.html" %}
+<div id="wrap">
+{% include "header.html" %}
+<div id="content">
+<h2>{% trans "Terms" %}</h2>
+<h3>{% trans "Basic" %}</h3>
+<ul>
+<li>{% trans "Do not abuse I Thank." %}</li>
+<li>{% trans "Accept any changes to the Terms without further notifications to you." %}</li>
+</ul>
+
+<h3>{% trans "Disallowed contents of Thanks" %}</h3>
+{% trans "If you submit the following contents, those contents will be deleted." %}
+<ul>
+<li>{% trans "Copyright infringement" %},</li>
+<li>{% trans "Hate against a protected group" %},</li>
+<li>{% trans "Adult content" %},</li>
+<li>{% trans "Promotion of dangerous and illegal activity" %},</li>
+<li>{% trans "Content facilitating phishing or account hijacking" %},</li>
+<li>{% trans "Commericial intentions" %},</li>
+<li>{% trans "Spams" %}.</li>
+</ul>
+
+{% trans "However, the moderators of I Thank may delete any contents without specifying reasons." %}
+
+<h3>{% trans "Submissions of Thanks" %}</h3>
+{% trans "Except the disallowed contents as described in previous secion, you do not:" %}
+<ul>
+<li>{% trans "Submit content into different language which does not belong to" %}.</li>
+</ul>
+
+<h3>{% trans "License of Your Thanks" %}</h3>
+{% trans 'You agree to license your thanks under a <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons License</a>.' %}
+
+<h2>{% trans "Policy" %}</h2>
+{% trans "We will never sell you and your thanks." %}
+
+</div>
+{% include "footer.html" %}
+</div>
+{{ config.before_body_end }}
+</body>
+</html>

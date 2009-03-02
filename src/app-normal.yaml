@@ -3,6 +3,8 @@ version: 1
 runtime: python
 api_version: 1
 
+default_expiration: "1d"
+
 handlers:
 - url: /css
   static_dir: css
@@ -37,6 +39,9 @@ handlers:
   script: thank_now.py
 - url: /preview.json
   script: thank_now.py
+
+- url: /stats/?
+  script: stats.py
 
 - url: /.*
   script: index.py

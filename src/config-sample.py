@@ -43,7 +43,7 @@ valid_languages = (
     )
 
 dict_valid_languages = dict(valid_languages)
-
+keys_valid_languages = dict_valid_languages.keys()
 
 # Should not edit settings below
 ################################

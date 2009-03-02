@@ -132,16 +132,12 @@ def get_random(count, language=None):
     counter_key = 'thank'
 
   counter = Counter(counter_key).count
-  log.debug('%s %d' % (counter_key, counter))
   rv = Random()
   q = Thank.all()
   if language:
     q.filter('language =', language)
 
-  log.debug('x')
   random_items = []
-  log.debug(len(random_items))
-  log.debug(counter)
   while len(random_items) < counter:
     item = q.fetch(1, offset=int(rv.uniform(0, counter)))
     if item:
@@ -149,8 +145,6 @@ def get_random(count, language=None):
       _cache(item[0])
       random_items += item
  
-  log.debug('x')
-  log.debug(random_items)
   return random_items
 
 

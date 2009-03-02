@@ -1,6 +1,7 @@
 import logging as log
 import os
 
+from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import login_required, run_wsgi_app
@@ -14,6 +15,7 @@ from ithank import thank
 from ithank.util import I18NRequestHandler, json_error, send_json, set_topbar_vars
 import config
 import ithank
+import simple24 as s24
 
 
 class ThankNowPage(I18NRequestHandler):
@@ -24,16 +26,10 @@ class ThankNowPage(I18NRequestHandler):
     user = users.get_current_user()
 
     template_values = {
-        'before_head_end': config.before_head_end,
-        'after_footer': config.after_footer,
-        'before_body_end': config.before_body_end,
+        'config': config,
         'name': user.nickname(),
-        'name_maxlength': config.thank_max_name,
-        'valid_languages': config.valid_languages,
         'subject': _('I thank '),
-        'subject_maxlength': config.thank_max_subject,
         'story': _('Write the story here at least %d characters' % config.thank_min_story),
-        'story_maxlength': config.thank_max_story,
         }
     path = os.path.join(os.path.dirname(__file__), 'template/thank_now.html')
     self.response.out.write(template.render(path, template_values))
@@ -54,28 +50,22 @@ class ThankNowPage(I18NRequestHandler):
       thx = thank.add(name, language, subject, story)
       # TODO check last thank, must be longer than 10 minutes
       template_values = {
-          'before_head_end': config.before_head_end,
-          'after_footer': config.after_footer,
-          'before_body_end': config.before_body_end,
+          'config': config,
           'thank_link': thx.create_link().encode('utf-8'),
           'tweet_message': thx.create_tweet().encode('utf-8'),
           }
       path = os.path.join(os.path.dirname(__file__), 'template/thanked.html') 
+      
+      s24.incr('thanks_added')
     except ValueError, e:
       # TODO check last thank, must be longer than 10 minutes
       template_values = {
-          'before_head_end': config.before_head_end,
-          'after_footer': config.after_footer,
-          'before_body_end': config.before_body_end,
+          'config': config,
           'messages': (('error', e.message), ),
           'name': name,
-          'name_maxlength': config.thank_max_name,
-          'valid_languages': config.valid_languages,
           'language': language,
           'subject' : subject,
-          'subject_maxlength': config.thank_max_subject,
           'story' : story,
-          'story_maxlength': config.thank_max_story,
           }
       path = os.path.join(os.path.dirname(__file__), 'template/thank_now.html')
     self.response.out.write(template.render(path, template_values))
