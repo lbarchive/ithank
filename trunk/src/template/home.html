@@ -9,7 +9,7 @@
   <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
   <script src="http://www.google.com/jsapi" type="text/javascript"></script>
   <script src="/js/ithank.js" type="text/javascript"></script>
-{{ before_head_end }}
+{{ config.before_head_end }}
 </head>
 <body>
 {% include "topbar.html" %}
@@ -17,7 +17,7 @@
 {% include "header.html" %}
 <div id="sub-header">
 <p>{% trans "When was the last time that you thanked someone?" %}<br/>
-{% trans 'Why not <a href="/say">do it now</a> as these people <a href="/browse">have thanked</a>!' %}</p>
+{% trans 'Why not <a href="/thank">do it now</a> as these people <a href="/browse">have thanked</a>!' %}</p>
 </div>
 <div id="content">
 {% if thank %}
@@ -27,6 +27,6 @@
 </div>
 {% include "footer.html" %}
 </div>
-{{ before_body_end }}
+{{ config.before_body_end }}
 </body>
 </html>

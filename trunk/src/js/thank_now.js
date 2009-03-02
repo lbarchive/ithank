@@ -1,6 +1,6 @@
 google.load("language", "1");
 
-/*
+
 function prettify_lang_name(lang) {
   var words = lang.split('_');
   var result = new Array();
@@ -10,7 +10,7 @@ function prettify_lang_name(lang) {
     }
   return result.join(' ');
   }
-*/
+
 
 function detect_language() {
   google.language.detect($('#subject').val(), function(result) {
@@ -22,8 +22,13 @@ function detect_language() {
           break;
           }
         }
-      if (language != 'unknown')
-        $('#language').get(0).selectedIndex = $('#language option[value=' + result.language + ']').get(0).index
+      if (language != 'unknown') {
+        var item = $('#language option[value=' + result.language + ']').get(0)
+        if (item)
+          $('#language').get(0).selectedIndex = item.index
+        else
+          alert(prettify_lang_name(language) + " is not supported yet! Please ask for adding it.");
+        }
       else
         alert("Google Translate couldn't detect!");
       }

@@ -152,3 +152,6 @@ pre {
   text-align: center;
   }
 
+.feed * {
+  vertical-align: middle;
+  }

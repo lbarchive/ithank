@@ -1,6 +1,7 @@
 import logging as log
 import os
 
+from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -16,6 +17,7 @@ from ithank.paginator import Paginator
 from ithank.util import I18NRequestHandler, json_error, send_json, set_topbar_vars
 import config
 import ithank
+import simple24 as s24
 
 
 class ThankPage(I18NRequestHandler):
@@ -30,9 +32,7 @@ class ThankPage(I18NRequestHandler):
 
     thx.name = thx.name.encode('utf-8')
     template_values = {
-        'before_head_end': config.before_head_end,
-        'after_footer': config.after_footer,
-        'before_body_end': config.before_body_end,
+        'config': config,
         'thank': thx,
         }
     set_topbar_vars(template_values, self.request.url)
@@ -44,17 +44,16 @@ class FlagJSON(I18NRequestHandler):
 
   def get(self):
 
-    # TODO flag simple24
+    callback = self.request.get('callback') 
     thank_id = self.request.get('thank_id') 
     if thank_id == '':
       json_error(self.response, ithank.ERROR_INVALID_THANK_ID, callback)
       return
-    callback = self.request.get('callback') 
     
     # Must log in
     user = users.get_current_user()
     if not user:
-      log.warning('Login required' % thank_id)
+      log.warning('Login required')
       json_error(self.respoonse, ithank.ERROR_LOGIN_REQUIRED, callback)
       return
 
@@ -68,6 +67,7 @@ class FlagJSON(I18NRequestHandler):
     if user not in thx.flaggers:
       # Flagging it
       thank.flag(thx.key().id(), user)
+      s24.incr('flagged')
 
     send_json(self.response, {'flag_msg': _('Flagged'), 'thank_id': thank_id}, callback)
 
@@ -121,9 +121,7 @@ class BrowsePage(I18NRequestHandler):
       thx.name = thx.name.encode('utf-8')
 
     template_values = {
-        'before_head_end': config.before_head_end,
-        'after_footer': config.after_footer,
-        'before_body_end': config.before_body_end,
+        'config': config,
         'title': title,
         'current_page': page,
         'thanks': thanks,
@@ -131,7 +129,7 @@ class BrowsePage(I18NRequestHandler):
         'nav_list': nav_list,
         'next': next,
         'lang_path': lang_path,
-        'valid_languages': config.valid_languages,
+        'language': language,
         'cut_story': True,
         'feed_link': '%sfeed/%s' % (config.base_URI, lang_path),
         }

@@ -23,13 +23,12 @@ class HomePage(I18NRequestHandler):
   def get(self):
     
     thx = thank.get_random(1)
-    thx = thx[0] if thx else None
+    if thx:
+      thx = thx[0]
+      thx.name = thx.name.encode('utf-8')
     
-    thx.name = thx.name.encode('utf-8')
     template_values = {
-        'before_head_end': config.before_head_end,
-        'after_footer': config.after_footer,
-        'before_body_end': config.before_body_end,
+        'config': config,
         'thank': thx,
         }
     set_topbar_vars(template_values, self.request.url)
@@ -37,14 +36,52 @@ class HomePage(I18NRequestHandler):
     self.response.out.write(template.render(path, template_values))
 
 
+class AboutPage(I18NRequestHandler):
+
+  def get(self):
+ 
+    template_values = {
+        'config': config,
+        }
+    set_topbar_vars(template_values, self.request.url)
+    path = os.path.join(os.path.dirname(__file__), 'template/about.html')
+    self.response.out.write(template.render(path, template_values))
+
+
+class TermsPage(I18NRequestHandler):
+
+  def get(self):
+ 
+    template_values = {
+        'config': config,
+        }
+    set_topbar_vars(template_values, self.request.url)
+    path = os.path.join(os.path.dirname(__file__), 'template/terms.html')
+    self.response.out.write(template.render(path, template_values))
+
+
+class EverywherePage(I18NRequestHandler):
+
+  def get(self):
+ 
+    template_values = {
+        'config': config,
+        }
+    set_topbar_vars(template_values, self.request.url)
+    path = os.path.join(os.path.dirname(__file__), 'template/everywhere.html')
+    self.response.out.write(template.render(path, template_values))
+
+
 application = webapp.WSGIApplication([
     ('/', HomePage),
+    ('/about', AboutPage),
+    ('/terms', TermsPage),
+    ('/everywhere', EverywherePage),
     ],
     debug=config.debug)
 
 
 def main():
-  """Main function"""
   run_wsgi_app(application)
 
 
