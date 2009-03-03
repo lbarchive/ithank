@@ -115,8 +115,13 @@ pre {
   margin-top: 20px;
   }
 
+.thank .subject a {
+  font-style: italic;
+  }
+
 .thank .thanker {
   float: right;
+  font-style: italic;
   }
 
 .thank .stuff {
