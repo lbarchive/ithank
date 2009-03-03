@@ -16,7 +16,9 @@
 {% include "header.html" %}
 {% include "topbar.html" %}
 <div id="content">
-{% if thank %}{% include "thank_item.html" %}{% endif %}
+{% if thank %}{% include "thank_item.html" %}
+{% if config.enable_disqus %}<div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/ithank/embed.js"></script><noscript><a href="http://ithank.disqus.com/?url=ref">{% trans "View the discussion thread." %}</a></noscript><a href="http://disqus.com" class="dsq-brlink">{% trans 'blog comments powered by <span class="logo-disqus">Disqus</span>' %}</a>{% endif %}
+{% endif %}
 </div>
 {% include "footer.html" %}
 </div>

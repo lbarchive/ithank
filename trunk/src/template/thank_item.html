@@ -6,5 +6,6 @@
 <div class="stuff">
 {% if current_user %}{% ifin current_user thank.flaggers %}{% trans "Flagged" %}{% else %}<div class="flag-button"><a href="javascript:flag('{{ thank.encode_thank_id }}')" class="flag">{% trans "Flag as inappropriate" %}</a></div>{% endifin %}{% endif %}
 {% if cut_story %}<div class="read-all-button"><a href="{{ thank.create_link }}">{% trans "Read all" %}</a></div>{% endif %}
+{% if config.enable_disqus %}<div class="disqus-comments-button"><a href="{{ thank.create_link }}#disqus_thread">{% trans "View Comments" %}</a></div>{% endif %}
 </div>
 </div>
