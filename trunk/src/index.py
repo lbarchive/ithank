@@ -82,6 +82,7 @@ application = webapp.WSGIApplication([
 
 
 def main():
+  """Main function"""
   run_wsgi_app(application)
 
 

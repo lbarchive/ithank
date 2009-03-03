@@ -64,7 +64,7 @@ class Feed(I18NRequestHandler):
       mem_key = 'feed_%s' % language
       feed_url = '%sfeed/%s/' % (config.base_URI, language)
     else:
-      mem_key = 'feed'
+      mem_key = 'feed_all'
       feed_url = '%sfeed/' % config.base_URI
 
     raw_feed = memcache.get(mem_key)
@@ -103,6 +103,7 @@ class Feed(I18NRequestHandler):
       log.error('Unable to cache %s' % mem_key)
 
     # Simple24
+    s24.incr('feed')
     s24.incr(mem_key)
 
 
