@@ -98,7 +98,7 @@ def get_chart_uri(key, cache_time=300):
       str(max_count)])
   chd = ','.join(s_counts)
   chart_uri = "http://chart.apis.google.com/chart?chs=600x200&chf=bg,s,FF99AA&\
-chtt=%s&cht=bvs&chco=4D89F9&chbh=a&chd=t:%s&chds=%d,%d&chxt=%s&chxl=%s" % \
+chtt=%s&cht=bvs&chco=FF6A6A&chbh=a&chd=t:%s&chds=%d,%d&chxt=%s&chxl=%s" % \
       (chtt, chd, min_count, max_count, chxt, chxl)
   if cache_time > 0:
     memcache.set('simple24_%s_chart_uri' % key, chart_uri, cache_time)
