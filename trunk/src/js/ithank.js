@@ -2,7 +2,7 @@ google.load("jquery", "1");
 
 
 // Global error indicator
-google.setOnLoadCallback(function() {
+function init_error_indicator() {
   $("#messages").ajaxError(function(event, request, settings){
     var err_msg;
     switch(request.status) {
@@ -17,7 +17,7 @@ google.setOnLoadCallback(function() {
       }
     $(this).html('<div class="error">' + err_msg + '</div>');
     });
-  });
+  }
 
 
 // Flagging
@@ -46,39 +46,28 @@ function flag(thank_id) {
 
 function init_header() {
   // Hooking
-  $('img.language-hover').hover(
-    function() {
-      // Mouse in
-      if (this.src.indexOf('-hover.') > 0)
-        // Already showing hovering image
-        return;
+  $('img.language-hover').each(function() {
+    // Caching images
+    var img = new Image()
+    img.src = this.src;
+    var img_hover = new Image();
+    img_hover.src = this.src.replace('.png', '') + '-hover.png';
 
-      uri = this.src.split('.')
-      if (uri.length != 2)
-        // Unable to handle this image src
-        return;
-      this.src = uri[0] + '-hover.' + uri[1];
+    $(this).hover(
+      function() {
+        this.src = img_hover.src;
       },
-    function() {
-      // Mouse out
-      if (this.src.indexOf('-hover.') == -1)
-        return;
-
-      uri = this.src.split('.')
-      if (uri.length != 2)
-        // Unable to handle this image src
-        return;
-      this.src = uri[0].replace('-hover', '') + '.' + uri[1];
+      function() {
+        this.src = img.src;
       }
-    );
+      );
+    });
   }
-
-google.setOnLoadCallback(init_header);
 
 
 // Initialize Disqus
 // Based on http://disqus.com/integrate/ithank/generic/
-google.setOnLoadCallback(function() {
+function init_disqus() {
   var links = document.getElementsByTagName('a');
   var query = '?';
   for(var i = 0; i < links.length; i++) {
@@ -86,7 +75,12 @@ google.setOnLoadCallback(function() {
       query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
       }
     }
-  // document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/ithank/get_num_replies.js' + query + '"></' + 'script>');
   $.getScript("http://disqus.com/forums/ithank/get_num_replies.js" + query);
-  });
+  }
 
+
+google.setOnLoadCallback(function () {
+  init_error_indicator();
+  init_header();
+  init_disqus();
+  });
