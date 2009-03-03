@@ -26,15 +26,18 @@ class ThankPage(I18NRequestHandler):
     
     thx = thank.Thank.get_by_thank_id(thank_id)
 
-    if not thx:
-      log.warning('Non-existing thank requested: %s' % thank_id)
-      self.redirect('/')
-
-    thx.name = thx.name.encode('utf-8')
     template_values = {
         'config': config,
-        'thank': thx,
         }
+
+    if not thx:
+      log.warning('Non-existing thank requested: %s' % thank_id)
+      self.error(404)
+      template_values['messages'] = [('error', _('This thank is not existing!'))]
+    else:
+      thx.name = thx.name.encode('utf-8')
+      template_values['thank'] =  thx
+
     set_topbar_vars(template_values, self.request.url)
     path = os.path.join(os.path.dirname(__file__), 'template/thank.html')
     self.response.out.write(template.render(path, template_values))
