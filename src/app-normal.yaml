@@ -32,6 +32,8 @@ handlers:
 
 - url: /random.json
   script: API.py
+- url: /random.txt
+  script: API.py
 - url: /feed.*
   script: API.py
 

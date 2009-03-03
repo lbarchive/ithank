@@ -49,6 +49,29 @@ class RandomJSON(I18NRequestHandler):
     # TODO
 
 
+class RandomText(I18NRequestHandler):
+
+  def get(self):
+    '''
+    Returns plain text of a random thank.
+    '''
+
+    language = self.request.get('language')
+    try:
+      thanks = thank.get_random(1, language)
+    except ValueError, e:
+      self.error(500)
+      self.response.out.write(e.message)
+      return
+
+    if thanks:
+      thx = thanks[0]
+      self.response.out.write(template.Template('{{ thank.subject|striptags }}\n\n{{ thank.story|striptags }}\n\n{{ thank.name|striptags }}\n').render(template.Context({'thank': thx})))
+      s24.incr('random.txt')
+    else:
+      self.response.out.write(_('No thanks available.'))
+
+
 class Feed(I18NRequestHandler):
 
   def get(self, language, page):
@@ -109,6 +132,7 @@ class Feed(I18NRequestHandler):
 
 application = webapp.WSGIApplication([
     (r'/random\.json', RandomJSON),
+    (r'/random\.txt', RandomText),
     ('/feed/?([a-zA-Z_]*)/?([0-9]*)/?', Feed),
     ],
     debug=config.debug)
