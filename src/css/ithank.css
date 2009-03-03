@@ -132,7 +132,13 @@ pre {
 .thank .stuff .flag-button {
   float: left;
   }
+
 .thank .stuff .read-all-button {
+  padding-left: 20px;
+  float: right;
+  }
+
+.thank .stuff .disqus-comments-button {
   float: right;
   }
 

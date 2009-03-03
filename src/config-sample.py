@@ -35,6 +35,9 @@ thanks_random_max_items = 1
 
 thanks_feed_items = 100
 
+# Disqus
+enable_disqus = True
+
 # Valid language to submit
 valid_languages = (
     # 'en', 'zh_TW' should match the directories in conf/locale/*
