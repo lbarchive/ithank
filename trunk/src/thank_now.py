@@ -70,6 +70,10 @@ class ThankNowPage(I18NRequestHandler):
       path = os.path.join(os.path.dirname(__file__), 'template/thank_now.html')
     self.response.out.write(template.render(path, template_values))
 
+  def head(self):
+
+    pass
+
 
 class PreviewJSON(I18NRequestHandler):
 
