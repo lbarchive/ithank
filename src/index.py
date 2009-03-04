@@ -35,6 +35,10 @@ class HomePage(I18NRequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'template/home.html')
     self.response.out.write(template.render(path, template_values))
 
+  def head(self):
+
+    pass
+
 
 class AboutPage(I18NRequestHandler):
 
@@ -46,6 +50,10 @@ class AboutPage(I18NRequestHandler):
     set_topbar_vars(template_values, self.request.url)
     path = os.path.join(os.path.dirname(__file__), 'template/about.html')
     self.response.out.write(template.render(path, template_values))
+
+  def head(self):
+
+    pass
 
 
 class TermsPage(I18NRequestHandler):
@@ -59,6 +67,10 @@ class TermsPage(I18NRequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'template/terms.html')
     self.response.out.write(template.render(path, template_values))
 
+  def head(self):
+
+    pass
+
 
 class EverywherePage(I18NRequestHandler):
 
@@ -71,6 +83,9 @@ class EverywherePage(I18NRequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'template/everywhere.html')
     self.response.out.write(template.render(path, template_values))
 
+  def head(self):
+
+    pass
 
 application = webapp.WSGIApplication([
     ('/', HomePage),

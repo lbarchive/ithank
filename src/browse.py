@@ -42,6 +42,13 @@ class ThankPage(I18NRequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'template/thank.html')
     self.response.out.write(template.render(path, template_values))
 
+  def head(self, thank_id):
+
+    thx = thank.Thank.get_by_thank_id(thank_id)
+
+    if not thx:
+      self.error(404)
+
 
 class FlagJSON(I18NRequestHandler):
 
@@ -141,6 +148,10 @@ class BrowsePage(I18NRequestHandler):
 
     path = os.path.join(os.path.dirname(__file__), 'template/browse.html')
     self.response.out.write(template.render(path, template_values))
+
+  def get(self, language, page):
+
+    pass
 
 
 application = webapp.WSGIApplication([
