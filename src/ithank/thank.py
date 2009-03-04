@@ -32,7 +32,7 @@ class Thank(db.Model):
      - Packs with litten-endian long long,
      - Strips tailing \\x00 bytes,
      - Encodes with Base64-url-friendly,
-     - Replaces padding = with period.
+     - Removes padding =
     '''
     
     if '_thank_id' in dir(self):
@@ -43,7 +43,7 @@ class Thank(db.Model):
     if config.debug:
       log.debug('encode_thank_id: %d' % id)
 
-    self._thank_id = urlsafe_b64encode(pack('<Q', id).rstrip('\x00')).replace('=', '.')
+    self._thank_id = urlsafe_b64encode(pack('<Q', id).rstrip('\x00')).replace('=', '')
     return self._thank_id
 
   @classmethod
@@ -52,7 +52,7 @@ class Thank(db.Model):
     Decodes the thank id to the model's id
     
     Procedure is
-     - Replaces period with original padding =,
+     - Tries to re-append padding =,
      - Decodes with Base64-url-friendly,
      - Appends \\x00 to make the length of 8,
      - Unpacks with litten-endian long long.
@@ -64,7 +64,13 @@ class Thank(db.Model):
       log.debug('decode_thank_id: %s' % thank_id)
 
     try:
-      thank_id = urlsafe_b64decode(thank_id.replace('.', '='))
+      thank_id = thank_id.replace('.', '')
+      for i in range(3):
+        try:
+          thank_id = urlsafe_b64decode(thank_id)
+          break
+        except TypeError, e:
+          thank_id += '='
       id = unpack('<Q', thank_id + '\x00' * (8 - len(thank_id)))
     except:
       log.warning('Invalid thank_id: %s' % thank_id)
