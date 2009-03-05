@@ -149,7 +149,7 @@ class BrowsePage(I18NRequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'template/browse.html')
     self.response.out.write(template.render(path, template_values))
 
-  def get(self, language, page):
+  def head(self, language, page):
 
     pass
 
