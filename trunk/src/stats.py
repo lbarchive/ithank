@@ -30,6 +30,10 @@ class StatsPage(I18NRequestHandler):
         'thanks_added_chart': s24.get_chart_uri('thanks_added'),
         'feed_reqs': s24.get_count('feed'),
         'feed_reqs_chart': s24.get_chart_uri('feed'),
+        'API_random_txt_reqs': s24.get_count('random.txt'),
+        'API_random_txt_reqs_chart': s24.get_chart_uri('random.txt'),
+        'API_random_json_reqs': s24.get_count('random.json'),
+        'API_random_json_reqs_chart': s24.get_chart_uri('random.json'),
         }
     set_topbar_vars(template_values, self.request.url)
     path = os.path.join(os.path.dirname(__file__), 'template/stats.html')

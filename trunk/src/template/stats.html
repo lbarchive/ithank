@@ -23,8 +23,16 @@ Thanks added in last 24 hours: {{ thanks_added }}.<br/>
 <img src="{{ thanks_added_chart|escape }}" alt="Chart of completed requests in last 24 hours" title="Chart of completed requests in last 24 hours"/>
 
 <h3>Feeds</h3>
-Total: {{ feed_reqs }}.<br/>
+Total requests: {{ feed_reqs }}.<br/>
 <img src="{{ feed_reqs_chart|escape }}" alt="Chart of completed requests in last 24 hours" title="Chart of completed requests in last 24 hours"/>
+
+<h3>API</h3>
+<h4>random.txt</h4>
+Total requests: {{ API_random_txt_reqs }}.<br/>
+<img src="{{ API_random_txt_reqs_chart|escape }}" alt="Chart of completed requests in last 24 hours" title="Chart of completed requests in last 24 hours"/>
+<h4>random.json</h4>
+Total requests: {{ API_random_json_reqs }}.<br/>
+<img src="{{ API_random_json_reqs_chart|escape }}" alt="Chart of completed requests in last 24 hours" title="Chart of completed requests in last 24 hours"/>
 </div>
 {% include "footer.html" %}
 </div>
