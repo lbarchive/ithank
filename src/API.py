@@ -33,20 +33,76 @@ class RandomJSON(I18NRequestHandler):
     if language:
       if language not in config.dict_valid_languages:
         log.warning('Invalid language: %s' % language)
-        json.error(self.response, 3)
+        json_error(self.response, ERROR_INVALID_LANGUAGE, callback)
         return
-      counter_key = 'thank_%s' % language
-      query = "SELECT * FROM Thank WHERE language = '%s' ORDER BY published DESC" % language
-      lang_path = language + '/'
-      title = config.dict_valid_languages[language]
-    else:
-      counter_key = 'thank'
-      query = 'SELECT * FROM Thank ORDER BY published DESC'
-      lang_path = ''
-      title = _('All')
+    
+    try:
+      thanks = thank.get_random(count, language)
+    except ValueError, e:
+      json_error(self.response, ithank.ERROR, e.message, callback)
+      return
 
-    thanks = thank.get_random(count, language)
-    # TODO
+    if thanks:
+      thanks_json = []
+      for thx in thanks:
+        thanks_json.append({
+            'subject': template.Template('{{ subject|striptags }}').render(template.Context({'subject': thx.subject})),
+            'link': thx.create_link(),
+            'story': template.Template('{{ story|striptags|linebreaks }}').render(template.Context({'story': thx.story})),
+            'thanker': template.Template('{{ name|striptags }}').render(template.Context({'name': thx.name})),
+            # TODO
+            # 'published': convert_to_foo(thx.published),
+            })
+
+    send_json(self.response, {'thanks': thanks_json}, callback)
+    s24.incr('random.json')
+
+
+class RandomRSS(I18NRequestHandler):
+
+  def get(self):
+ 
+    count = self.request.get('count', 1)
+    if count < 1:
+      count = 1
+    if count > config.thanks_random_max_items:
+      count = config.thanks_random_max_items
+    language = self.request.get('language') 
+
+    if language:
+      if language not in config.dict_valid_languages:
+        log.warning('Invalid language: %s' % language)
+        self.error(500)
+        return
+    
+    try:
+      thanks = thank.get_random(count, language)
+    except ValueError, e:
+      self.error(500)
+      return
+
+    feed = feedgenerator.Rss201rev2Feed(
+        title=_('I Thank'),
+        link=config.base_URI,
+        description=_('Say thanks!'),
+        feed_url=self.request.uri,
+        feed_copyright='Creative Commons Attribution-Share Alike 3.0 Unported License',
+        )
+
+    if thanks:
+      for thx in thanks:
+        feed.add_item(
+            title=template.Template('{{ subject|striptags }}').render(template.Context({'subject': thx.subject})),
+            link=thx.create_link(),
+            description=template.Template('{{ story|striptags|linebreaks }}').render(template.Context({'story': thx.story})),
+            author_name=template.Template('{{ name|striptags }}').render(template.Context({'name': thx.name})),
+            author_email='noreply@i-thank.appspot.com',
+            pubdate=thx.published, unique_id=thx.create_link())
+
+    raw_feed = feed.writeString('utf8')
+    self.response.out.write(raw_feed)
+
+    s24.incr('random.rss')
 
 
 class RandomText(I18NRequestHandler):
@@ -132,6 +188,7 @@ class Feed(I18NRequestHandler):
 
 application = webapp.WSGIApplication([
     (r'/random\.json', RandomJSON),
+    (r'/random\.rss', RandomRSS),
     (r'/random\.txt', RandomText),
     ('/feed/?([a-zA-Z_]*)/?([0-9]*)/?', Feed),
     ],

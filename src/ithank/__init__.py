@@ -1,10 +1,14 @@
 ERROR_INVALID_THANK_ID = 1
 ERROR_LOGIN_REQUIRED = 2
 ERROR_INVALID_LANGUAGE = 3
+ERROR_NO_THANKS = 4
+ERROR = 99
 
 ERROR_MESSAGES = {
   ERROR_INVALID_THANK_ID: _('Invalid thank_id'),
   ERROR_LOGIN_REQUIRED: _('Login required'),
   ERROR_INVALID_LANGUAGE: _('Invalid language'),
+  ERROR_NO_THANKS: _('No thanks available'),
+  ERROR: _('Error'),
   }
 
