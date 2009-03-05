@@ -15,6 +15,9 @@ handlers:
 - url: /js
   static_dir: js
  
+- url: /everywhere
+  static_dir: everywhere
+
 - url: /robots.txt
   static_files: robots.txt
   upload: robots.txt
@@ -31,6 +34,8 @@ handlers:
   script: browse.py
 
 - url: /random.json
+  script: API.py
+- url: /random.rss
   script: API.py
 - url: /random.txt
   script: API.py

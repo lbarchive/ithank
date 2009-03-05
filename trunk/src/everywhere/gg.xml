@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+<ModulePrefs
+title="I Thank"
+description="Show a random thank from I Thank"
+author="Yu-Jie Lin"
+author_email="livibetter+ithank@gmail.com"
+screenshot="http://i-thank.appspot.com/img/gg-screenshot.png"
+thumbnail="http://i-thank.appspot.com/img/thumbnail.png"
+title_url="http://i-thank.appspot.com/"
+height="300"/>
+<Content type="html"><![CDATA[
+<style>
+#content_div {
+padding: 3px;
+height: 300px;
+overflow: auto;
+background: #f9a url('http://i-thank.appspot.com/img/bg.png') repeat;
+}
+#content_div * {
+font-family: "Times New Roman", Serif;
+color: #412;
+}
+a {
+font-weight: bold;
+text-decoration: none;
+color: #66f;
+}
+a:hover {
+text-decoration: underline;
+color: #c23;
+}
+a img {
+border: none;
+}
+#header {
+text-align: center;
+}
+#subject a {
+font-style: italic;
+color: #66f;
+}
+#thanker {
+padding-bottom: 20px;
+float: right;
+font-style: italic;
+}
+</style>
+<div id="content_div">
+<div id="header"><a href="http://i-thank.appspot.com/" target="_blank"><img src="http://i-thank.appspot.com/img/en-header.png"/></a></div>
+<div id="thank">Loading...</div>
+</div>
+<script src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("jquery", "1");
+google.setOnLoadCallback(function() {
+  $.getJSON("http://i-thank.appspot.com/random.json?callback=?", function(json) {
+    if (json.err == 0) {
+      var html = '';
+      // TODO check the length of json.thanks
+      var thx = json.thanks[0];
+      html += '<div id="subject"><a href="' + thx.link + '" target="_blank">' + thx.subject + "</a></div>";
+      html += '<div id="story">' + thx.story + "</div>";
+      html += '<div id="thanker">' + thx.thanker + "</div>";
+      $('#thank').hide().html(html).slideDown('slow');
+      }
+    else {
+      $('#thank').html('Error: ' + json.err_msg);
+      }
+    });
+  });
+</script>
+]]></Content>
+</Module>
