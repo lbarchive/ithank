@@ -1,0 +1,41 @@
+{% load i18n %}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>{% trans "I Thank" %} » {% trans "Settings" %}</title>
+  <link href="/css/ithank.css" type="text/css" rel="stylesheet"/>
+  <link href="/css/settings.css" type="text/css" rel="stylesheet"/>
+  <link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+  <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+  <script src="/js/ithank.js" type="text/javascript"></script>
+{{ config.before_head_end }}
+</head>
+<body>
+{% include "topbar.html" %}
+<div id="wrap">
+{% include "header.html" %}
+<div id="content">
+<form action="/settings" method="post">
+<div class="field">
+<div class="field-name">{% trans "Language of Interface" %}</div>
+<select id="language" name="language">
+<option>Select</option>
+{% for lang in LANGUAGES %}
+<option value="{{ lang.0 }}"{% ifequal language lang.0 %} selected{% endifequal %}>{{ lang.1 }}</option>
+{% endfor %}
+</select>
+</div>
+<div class="field">
+<div class="field-value">
+<input type="submit" value="{% trans "Save" %}"/>
+</div>
+</div>
+</form>
+</div>
+{% include "footer.html" %}
+</div>
+{{ config.before_body_end }}
+</body>
+</html>

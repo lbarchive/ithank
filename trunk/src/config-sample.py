@@ -42,7 +42,7 @@ enable_disqus = True
 valid_languages = (
     # 'en', 'zh_TW' should match the directories in conf/locale/*
     ('en', _('English')),  
-#    ('zh_TW', _('Chinese')),
+    ('es', _('Spanish')),
     )
 
 dict_valid_languages = dict(valid_languages)

@@ -1,0 +1,17 @@
+div.field {
+  margin-top: 10px;
+  }
+
+div.field-name {
+  float: left;
+  width: 200px;
+  color: #840;
+  font-weight: bold;
+  font-family: Arial;
+  }
+
+div.field-value {
+  clear: both;
+  text-align: center;
+  }
+
