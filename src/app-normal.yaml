@@ -50,5 +50,8 @@ handlers:
 - url: /stats/?
   script: stats.py
 
+- url: /settings
+  script: settings.py
+
 - url: /.*
   script: index.py

@@ -1,0 +1,475 @@
+# Spanish translation for ithank
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the ithank package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ithank\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-14 05:24+0800\n"
+"PO-Revision-Date: 2009-03-05 22:56+0000\n"
+"Last-Translator: juancarlospaco <juancarlospaco@hotmail.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-03-13 20:16+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: thank_now.py:31
+msgid "I thank "
+msgstr "I thank "
+
+#: thank_now.py:32
+#, python-format
+msgid "Write the story here at least %d characters"
+msgstr "Escribe la historia aqui por lo menos %d caracteres"
+
+#: config-sample.py:44 config.py:52 conf/settings.py:6
+msgid "English"
+msgstr "Ingles"
+
+#: config-sample.py:45 config.py:53 conf/settings.py:7
+#, fuzzy
+msgid "Spanish"
+msgstr "Spams"
+
+#: browse.py:36
+msgid "This thank is not existing!"
+msgstr "Este thank no existe!"
+
+#: browse.py:82 template/thank_item.html:7
+msgid "Flagged"
+msgstr "Abanderado"
+
+#: browse.py:109 template/browse.html:28
+msgid "All"
+msgstr "Todo"
+
+#: API.py:85 API.py:155 template/settings.html:7 template/header.html:5
+#: template/header.html.py:16 template/home.html:7 template/thank.html:7
+#: template/thanked.html:7 template/thank_now.html:7 template/about.html:7
+#: template/everywhere.html:7 template/browse.html:7 template/stats.html:7
+#: template/terms.html:7
+msgid "I Thank"
+msgstr "I Thank"
+
+#: API.py:87 API.py:157
+msgid "Say thanks!"
+msgstr "Say thanks!"
+
+#: API.py:128
+msgid "No thanks available."
+msgstr "No thanks disponible"
+
+#: settings.py:43
+#, fuzzy
+msgid "Language saved"
+msgstr "Lenguaje"
+
+#: template/settings.html:7 template/topbar.html:3
+msgid "Settings"
+msgstr ""
+
+#: template/settings.html:22
+msgid "Language of Interface"
+msgstr ""
+
+#: template/settings.html:32
+msgid "Save"
+msgstr ""
+
+#: template/header.html:8 template/header.html.py:19
+msgid "Abort"
+msgstr "Abortar"
+
+#: template/header.html:9 template/header.html.py:20
+msgid "Blog"
+msgstr "Blog"
+
+#: template/header.html:10 template/header.html.py:21
+#: template/thank_now.html:7
+msgid "Thank Now"
+msgstr "Agradecer ahora"
+
+#: template/header.html:11 template/header.html.py:22
+msgid "Browse"
+msgstr "Examinar"
+
+#: template/header.html:12 template/header.html.py:23
+msgid "Help"
+msgstr "Ayuda"
+
+#: template/home.html:19
+msgid "When was the last time that you thanked someone?"
+msgstr "Cuando fue la ultima vez que has agradecido a alguien?"
+
+#: template/home.html:20
+msgid ""
+"Why not <a href=\"/thank\">do it now</a> as these people <a href=\"/browse"
+"\">have thanked</a>!"
+msgstr ""
+"Por que no <a href=\"/thank\">hacerlo ahora</a> asi esta gente <a href=\"/"
+"browse\">ha agradecido</a>!"
+
+#: template/home.html:24
+msgid "Read this Random Thank"
+msgstr "Leer un Agradecimiento al Azar"
+
+#: template/thank.html:20
+msgid "View the discussion thread."
+msgstr "ver el tema de discusion"
+
+#: template/thank.html:20
+msgid "blog comments powered by <span class=\"logo-disqus\">Disqus</span>"
+msgstr ""
+"Comentarios del blog potenciados por <span class=\"logo-disqus\">Disqus</"
+"span>"
+
+#: template/thank_item.html:5
+#, python-format
+msgid "%(thank_name)s thanked %(thank_published)s ago."
+msgstr ""
+
+#: template/thank_item.html:7
+msgid "Flag as inappropriate"
+msgstr "Marcar como inapropiado"
+
+#: template/thank_item.html:8
+msgid "Read all"
+msgstr "Leer todo"
+
+#: template/thank_item.html:9
+msgid "View Comments"
+msgstr "Ver comentarios"
+
+#: template/thanked.html:7
+msgid "Thanks for thanking!"
+msgstr "Gracias por agradecer!"
+
+#: template/thanked.html:17
+msgid "Thank you for thanking!"
+msgstr "Gracias a ti por agradecer!"
+
+#: template/thanked.html:17
+#, python-format
+msgid ""
+"You can <a href=\"%(thank_link)s\">read it</a> or <a href=\"http://twitter."
+"com/home?status=%(tweet_m)s\">tweet it</a>!"
+msgstr ""
+
+#: template/thank_now.html:22
+msgid "Name"
+msgstr "Nombre"
+
+#: template/thank_now.html:27
+msgid "Language"
+msgstr "Lenguaje"
+
+#: template/thank_now.html:37
+msgid "Subject"
+msgstr "Asunto"
+
+#: template/thank_now.html:44
+msgid "Story"
+msgstr "historia"
+
+#: template/thank_now.html:51
+msgid "Preview"
+msgstr "Previsualizar"
+
+#: template/thank_now.html:51
+msgid "Thank!"
+msgstr "Gracias!"
+
+#: template/thank_now.html:56
+msgid ""
+"Please write with care, you are not allowed to edit or to delete after "
+"thanking."
+msgstr ""
+"Por favor escribe con cuidado, no es posible editar o borrar luego de "
+"agradecer."
+
+#: template/thank_now.html:57
+msgid ""
+"By clicking on the &ldquo;Thank!&rdquo; button above means that you accept "
+"the <a href=\"/terms\">Terms</a>."
+msgstr ""
+
+#: template/footer.html:4 template/stats.html:7
+msgid "Statistics"
+msgstr "Estadisticas"
+
+#: template/footer.html:5
+msgid "API"
+msgstr "API"
+
+#: template/footer.html:6 template/terms.html:7 template/terms.html.py:19
+msgid "Terms"
+msgstr "Terminos"
+
+#: template/footer.html:7 template/everywhere.html:7
+msgid "Thanks Everywhere"
+msgstr "Gracias en todos lados"
+
+#: template/footer.html:10
+msgid ""
+"This page is licensed under <a rel=\"license\" href=\"http://creativecommons."
+"org/licenses/by-sa/3.0/\"><img alt=\"Creative Commons License\" style="
+"\"border-width:0\" src=\"http://i.creativecommons.org/l/by-sa/3.0/80x15.png"
+"\" /></a>"
+msgstr ""
+
+#: template/footer.html:12
+msgid ""
+"I Thank is created by <a href=\"http://sites.google.com/site/livibetter/"
+"\">Yu-Jie Lin</a>"
+msgstr ""
+"I Thank creado por <a href=\"http://sites.google.com/site/livibetter/\">Yu-"
+"Jie Lin</a>"
+
+#: template/about.html:7
+msgid "About"
+msgstr "Acerca de"
+
+#: template/about.html:19
+msgid "What Is This?"
+msgstr "Que es esto?"
+
+#: template/about.html:20
+msgid ""
+"This is a place that can encourage you thanking people or things. We may be "
+"aware of whom have really being kind to us, but we never said a word for "
+"that. Now, it's the time!"
+msgstr ""
+
+#: template/about.html:22
+msgid "Why Created This?"
+msgstr "Por que han creado esto?"
+
+#: template/about.html:23
+msgid ""
+"Except as described above, the creator of I Thank was afraid that today "
+"might be his last day. Do not be waiting for the perfect moments, you do not "
+"need to wait, because every single second is the right time to thank! Go "
+"thanking now!"
+msgstr ""
+
+#: template/about.html:25
+msgid "Where Is My Language?"
+msgstr "Donde esta mi Lenguaje?"
+
+#: template/about.html:26
+msgid ""
+"Please ask for the language you spoken at <a href=\"http://groups.google.com/"
+"group/ithank\">Discussion Group</a>."
+msgstr ""
+
+#: template/about.html:28
+msgid "Follow I Thank"
+msgstr "Seguir I Thank"
+
+#: template/about.html:29
+msgid ""
+"You can follow <a href=\"https://twitter.com/ithank\">@IThank</a> on Twitter."
+msgstr ""
+"Tu puedes seguir <a href=\"https://twitter.com/ithank\">@IThank</a> en "
+"Twitter."
+
+#: template/about.html:31
+msgid "This Project"
+msgstr "Este Proyecto"
+
+#: template/about.html:32
+msgid ""
+"The code of I Thank is open-sourced, you can <a href=\"http://code.google."
+"com/p/ithank/\">find more</a> on Google Code."
+msgstr ""
+
+#: template/about.html:34
+msgid "Help I Thank"
+msgstr "Ayudar a I Thank"
+
+#: template/about.html:35
+msgid "There are many ways that you could help. You can:"
+msgstr "Hay muchas maneras de las que tu puedes ayudar. Tu puedes:"
+
+#: template/about.html:37
+msgid ""
+"<a href=\"https://translations.launchpad.net/ithank\">Help translate</a> - "
+"The code has already supported localization, but need people to help "
+"translate. Please tell us at <a href=\"http://groups.google.com/group/ithank"
+"\">Discussion Group</a>."
+msgstr ""
+
+#: template/about.html:38
+msgid ""
+"Ideas - Free feel to tell us at <a href=\"http://groups.google.com/group/"
+"ithank\">Discussion Group</a> or <a href=\"http://code.google.com/p/ithank/"
+"issues/list\">Issue Tracker</a>."
+msgstr ""
+
+#: template/about.html:39
+msgid ""
+"Submit bug report - If you encounter any bugs, please submit bug report at "
+"<a href=\"http://code.google.com/p/ithank/issues/list\">Issue Tracker</a>."
+msgstr ""
+
+#: template/about.html:40
+msgid "Extend I Thank - Use API to extend or join to code."
+msgstr ""
+
+#: template/about.html:41
+msgid "Share with everyone - Pass the links of I Thank to everyone!"
+msgstr ""
+
+#: template/about.html:42
+msgid "Flag bad contents."
+msgstr "Marcar malos contenidos"
+
+#: template/browse.html:7
+#, python-format
+msgid "Page %(current_page)s"
+msgstr "Pagina %(current_page)s"
+
+#: template/browse.html:10
+msgid "RSS"
+msgstr "RSS"
+
+#: template/browse.html:22
+msgid "Previous Page"
+msgstr "Pagina Previa"
+
+#: template/browse.html:24
+msgid "Next Page"
+msgstr "Proxima Pagina"
+
+#: template/browse.html:26
+msgid "RSS feed"
+msgstr "Alimentador RSS"
+
+#: template/browse.html:28
+msgid "Browse other language:"
+msgstr "Examinar otro lenguaje"
+
+#: template/terms.html:20
+msgid "Basic"
+msgstr "Basico"
+
+#: template/terms.html:22
+msgid "Do not abuse I Thank."
+msgstr "No abuse de I Thank."
+
+#: template/terms.html:23
+msgid "Accept any changes to the Terms without further notifications to you."
+msgstr ""
+
+#: template/terms.html:26
+msgid "Disallowed contents of Thanks"
+msgstr "Deshabilitar contenidos de Agradecimientos"
+
+#: template/terms.html:27
+msgid "If you submit the following contents, those contents will be deleted."
+msgstr ""
+
+#: template/terms.html:29
+msgid "Copyright infringement"
+msgstr "Infringimiento de Copyright"
+
+#: template/terms.html:30
+msgid "Hate against a protected group"
+msgstr ""
+
+#: template/terms.html:31
+msgid "Adult content"
+msgstr "Contenido Adulto"
+
+#: template/terms.html:32
+msgid "Promotion of dangerous and illegal activity"
+msgstr "Promover actividades peligrosas o ilegales"
+
+#: template/terms.html:33
+msgid "Content facilitating phishing or account hijacking"
+msgstr ""
+
+#: template/terms.html:34
+msgid "Commericial intentions"
+msgstr "Inteciones comerciales"
+
+#: template/terms.html:35
+msgid "Spams"
+msgstr "Spams"
+
+#: template/terms.html:38
+msgid ""
+"However, the moderators of I Thank may delete any contents without "
+"specifying reasons."
+msgstr ""
+"Como sea, el moderador de I Thank puede borrar cualquier contenido sin "
+"especificar razon."
+
+#: template/terms.html:40
+msgid "Submissions of Thanks"
+msgstr ""
+
+#: template/terms.html:41
+msgid ""
+"Except the disallowed contents as described in previous secion, you do not:"
+msgstr ""
+
+#: template/terms.html:43
+msgid "Submit content into different language which does not belong to"
+msgstr ""
+
+#: template/terms.html:46
+msgid "License of Your Thanks"
+msgstr "Licencia de tu Thanks"
+
+#: template/terms.html:47
+msgid ""
+"You agree to license your thanks under a <a href=\"http://creativecommons."
+"org/licenses/by-sa/3.0/\">Creative Commons License</a>."
+msgstr ""
+
+#: template/terms.html:49
+msgid "Policy"
+msgstr "Politica"
+
+#: template/terms.html:50
+msgid "We will never sell you and your thanks."
+msgstr ""
+
+#: template/topbar.html:3
+#, python-format
+msgid "Hi! <b>%(nickname)s</b>"
+msgstr "Hola! <b>%(nickname)s</b>"
+
+#: template/topbar.html:3
+msgid "Sign out"
+msgstr "Cerrar sesion"
+
+#: template/topbar.html:3
+msgid "Sign in"
+msgstr "Iniciar sesion"
+
+#: ithank/__init__.py:8
+msgid "Invalid thank_id"
+msgstr "thank_id invalido"
+
+#: ithank/__init__.py:9
+msgid "Login required"
+msgstr "Login requerido"
+
+#: ithank/__init__.py:10
+msgid "Invalid language"
+msgstr "lenguaje invalido"
+
+#: ithank/__init__.py:11
+#, fuzzy
+msgid "No thanks available"
+msgstr "No thanks disponible"
+
+#: ithank/__init__.py:12
+msgid "Error"
+msgstr ""

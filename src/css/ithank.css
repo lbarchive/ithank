@@ -82,6 +82,9 @@ pre {
 
 /* Messages */
 #messages > div.message {
+  border: 2px solid #fff;
+  background-color: #f88;
+  color: #000;
   }
 
 #messages > div.error {
