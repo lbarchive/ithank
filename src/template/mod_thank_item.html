@@ -1,0 +1,10 @@
+{% load i18n ifin %}
+<div class="thank">
+<div class="subject"><a href="{{ thank.create_link }}">{{ thank.subject|striptags|escape }}</a></div>
+<div class="story">{% if cut_story %}{{ thank.story|striptags|escape|linebreaks|truncatewords_html:50 }}{% else %}{{ thank.story|striptags|escape|linebreaks }}{% endif %}</div>
+<div class="thanker">{% blocktrans with thank.name|striptags|escape as thank_name and thank.published|timesince as thank_published %}{{ thank_name }} thanked {{ thank_published }} ago.{% endblocktrans %}</div>
+<div class="stuff">
+<div class="flag-count">{{ thank.flags }}</div><div class="delete-button"><a href="javascript:delete_thank('{{ thank.encode_thank_id }}')" class="delete">{% trans "Delete" %}</a></div>
+{% if cut_story %}<div class="read-all-button"><a href="{{ thank.create_link }}">{% trans "Read all" %}</a></div>{% endif %}
+</div>
+</div>
