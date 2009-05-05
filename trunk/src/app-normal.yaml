@@ -53,5 +53,9 @@ handlers:
 - url: /settings
   script: settings.py
 
+- url: /admin/.*
+  script: admin.py
+  login: admin
+
 - url: /.*
   script: index.py

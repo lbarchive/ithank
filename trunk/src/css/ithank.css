@@ -136,6 +136,15 @@ pre {
   float: left;
   }
 
+.thank .stuff .flag-count {
+  float: left;
+  margin-right: 10px;
+  }
+
+.thank .stuff .delete-button {
+  float: left;
+  }
+
 .thank .stuff .read-all-button {
   padding-left: 20px;
   float: right;

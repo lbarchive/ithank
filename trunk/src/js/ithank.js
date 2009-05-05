@@ -44,6 +44,30 @@ function flag(thank_id) {
   }
 
 
+// Deleting
+function delete_thank(thank_id) {
+  var query_url = 'http://i-thank.appspot.com/';
+  if (window.location.href.indexOf('localhost') >= 0)
+    query_url = 'http://localhost:8080/';
+  if (thank_id == '#')
+    return;
+  $.getJSON(query_url + 'admin/delete.json?thank_id=' + thank_id + '&callback=?', function(json) {
+    if (json.err == 0) {
+      $("a.delete").each(function(){
+        var $ele = $(this)
+        if ($ele.attr('href').indexOf("('" + json.thank_id + "')") >= 0) {
+          $ele.replaceWith(json.delete_msg);
+          $('#messages').html();
+          return false;
+          }
+        });
+      }
+    else
+      $('#messages').html(json.err_msg);
+    });
+  }
+
+
 function init_header() {
   // Hooking
   $('img.language-hover').each(function() {
